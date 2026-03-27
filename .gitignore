@@ -1,0 +1,47 @@
+# ╔══════════════════════════════════════════════════════════════════════╗
+# ║   .gitignore — Tokyo Night Hyprland Rice                           ║
+# ║   Author: CyberSnake                                                     ║
+# ╚══════════════════════════════════════════════════════════════════════╝
+
+# ─── OS artifacts ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+\#*\#
+.nfs*
+
+# ─── IDE / Editors ──────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Backups created by installer ───────────────────────────────────
+rice-backup-*/
+*.bak
+*.orig
+
+# ─── Downloaded content (user-specific) ─────────────────────────────
+wallpapers/
+screenshots/
+
+# ─── Build artifacts ────────────────────────────────────────────────
+*.o
+*.so
+*.dylib
+
+# ─── Secrets & credentials ──────────────────────────────────────────
+.env
+.env.*
+*.key
+*.pem
+*.p12
+credentials.json
+
+# ─── Claude Code agent memory (local only) ──────────────────────────
+.claude/

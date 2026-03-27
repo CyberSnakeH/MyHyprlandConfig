@@ -1,0 +1,258 @@
+// =============================================================================
+// Waybar Configuration — Tokyo Night Rice
+// Premium floating pill-bar for Hyprland (Wayland)
+// Author: CyberSnakeLinux
+// Date: 2026-03-26
+// License: MIT
+// =============================================================================
+
+{
+    // -------------------------------------------------------------------------
+    // Global bar settings
+    // -------------------------------------------------------------------------
+    "layer": "top",
+    "position": "top",
+    "height": 42,
+    "spacing": 4,
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-bottom": 0,
+    "reload_style_on_change": true,
+
+    // -------------------------------------------------------------------------
+    // Module layout
+    // -------------------------------------------------------------------------
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "mpris",
+        "clock",
+        "custom/weather"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "disk",
+        "temperature",
+        "custom/updates",
+        "tray",
+        "custom/power"
+    ],
+
+    // =========================================================================
+    // LEFT MODULES
+    // =========================================================================
+
+    // Hyprland workspaces — persistent 1-9 with semantic Nerd Font icons
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-click": "activate",
+        "all-outputs": true,
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 9
+        },
+        "format-icons": {
+            "1": "1  ",
+            "2": "2  󰈹",
+            "3": "3  󰨞",
+            "4": "4  󰙯",
+            "5": "5  󰉋",
+            "6": "6  󰡁",
+            "7": "7  󰊗",
+            "8": "8  ",
+            "9": "9  󰝚",
+            "urgent": " "
+        }
+    },
+
+    // Active window title — truncated, with app icon
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 40,
+        "separate-outputs": true,
+        "icon": true,
+        "icon-size": 16,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": " $1",
+            "(.*) - Visual Studio Code": "󰨞 $1",
+            "(.*)": "$1"
+        }
+    },
+
+    // =========================================================================
+    // CENTER MODULES
+    // =========================================================================
+
+    // MPRIS media player — shows current track with player-specific icons
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "dynamic-order": ["title", "artist"],
+        "dynamic-separator": " — ",
+        "max-length": 32,
+        "player-icons": {
+            "spotify": "",
+            "firefox": "",
+            "mpv": "󰐌",
+            "default": "󰎈"
+        },
+        "status-icons": {
+            "playing": "󰏤",
+            "paused": "󰐊",
+            "stopped": "󰓛"
+        },
+        "tooltip-format": "{player} | {title} — {artist} [{album}]",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    // Clock — dual format with rich calendar tooltip
+    "clock": {
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%A %d %B %Y — %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months":   "<span color='#7aa2f7'><b>{}</b></span>",
+                "days":     "<span color='#c0caf5'>{}</span>",
+                "weeks":    "<span color='#545c7e'>W{}</span>",
+                "weekdays": "<span color='#e0af68'><b>{}</b></span>",
+                "today":    "<span color='#ff9e64'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    // Weather — external script, refreshes every 15 minutes
+    "custom/weather": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "interval": 900,
+        "tooltip": true,
+        "on-click": "xdg-open 'https://wttr.in'"
+    },
+
+    // =========================================================================
+    // RIGHT MODULES
+    // =========================================================================
+
+    // PulseAudio — volume with graduated icons, Bluetooth source detection
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "󰂯 {volume}%",
+        "format-muted": "󰝟 muted",
+        "format-source": " {volume}%",
+        "format-source-muted": " muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 2,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "tooltip-format": "{desc}\n{volume}% | {format_source}",
+        "smooth-scrolling-threshold": 1
+    },
+
+    // Network — WiFi signal strength, Ethernet, disconnected states
+    "network": {
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-linked": "󰈀 {ifname} (no IP)",
+        "format-disconnected": "󰤭 offline",
+        "format-alt": "  {essid} | {ipaddr}/{cidr}",
+        "tooltip-format": "Interface: {ifname}\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}\nNetmask: {netmask}\n\n {bandwidthUpBits}  {bandwidthDownBits}",
+        "interval": 5,
+        "on-click-right": "nm-connection-editor"
+    },
+
+    // CPU — usage percentage with frequency tooltip
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip-format": "CPU: {usage}%\nFrequency: {avg_frequency} GHz\n\n{usage0}% {usage1}% {usage2}% {usage3}%\n{usage4}% {usage5}% {usage6}% {usage7}%",
+        "interval": 2,
+        "on-click": "kitty --title 'System Monitor' btop",
+        "states": {
+            "critical": 90
+        }
+    },
+
+    // Memory — usage percentage with detailed tooltip
+    "memory": {
+        "format": " {}%",
+        "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)\nSwap: {swapUsed:0.1f} GiB / {swapTotal:0.1f} GiB ({swapPercentage}%)",
+        "interval": 5,
+        "on-click": "kitty --title 'System Monitor' btop",
+        "states": {
+            "critical": 90
+        }
+    },
+
+    // Disk — root partition usage
+    "disk": {
+        "format": "󰋊 {percentage_used}%",
+        "tooltip-format": "Path: {path}\nUsed: {used} / {total}\nFree: {free} ({percentage_free}%)\nFilesystem: {filesystem}",
+        "interval": 30,
+        "path": "/"
+    },
+
+    // Temperature — thermal zone with critical threshold
+    "temperature": {
+        "format": " {temperatureC}°C",
+        "format-critical": " {temperatureC}°C",
+        "critical-threshold": 80,
+        "tooltip-format": "Temperature: {temperatureC}°C / {temperatureF}°F",
+        "interval": 5
+    },
+
+    // Package updates — external script, hourly check
+    "custom/updates": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/updates.sh",
+        "interval": 3600,
+        "tooltip": true,
+        "on-click": "kitty --title 'System Update' bash -c 'sudo dnf upgrade -y; echo; echo Done. Press enter to close.; read'",
+        "signal": 8
+    },
+
+    // System tray — auto-hidden apps
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8,
+        "show-passive-items": true
+    },
+
+    // Power menu — launches wlogout
+    "custom/power": {
+        "format": "⏻",
+        "tooltip-format": "Power Menu",
+        "on-click": "wlogout -b 4 -c 0 -r 0 -m 0",
+        "on-click-right": "hyprctl dispatch exit"
+    }
+}

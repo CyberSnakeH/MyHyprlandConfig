@@ -1,0 +1,992 @@
+/* =====================================================================
+ * SwayNotificationCenter — Ultra-Premium Tokyo Night Glassmorphic Theme
+ * Author: CyberSnake
+ * Date:   2026-03-26
+ *
+ * A mobile-OS-grade notification panel with glassmorphic cards,
+ * urgency-coded accents, iOS-style toggles, and butter-smooth
+ * transitions. Designed to work with Hyprland's layer blur for
+ * true glass depth.
+ *
+ * Palette (Tokyo Night Storm):
+ *   bg-deep:    #16161e    bg-base:   #1a1b26    bg-surface: #1f2335
+ *   bg-float:   #24283b    border:    #292e42    border-hl:  #414868
+ *   fg:         #c0caf5    fg-dim:    #a9b1d6    fg-muted:   #565f89
+ *   blue:       #7aa2f7    purple:    #bb9af7    cyan:       #7dcfff
+ *   green:      #9ece6a    red:       #f7768e    yellow:     #e0af68
+ *   orange:     #ff9e64
+ * ===================================================================== */
+
+
+/* =================================================================== */
+/* GLOBAL RESET & BASE TYPOGRAPHY                                       */
+/* =================================================================== */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Inter", "Noto Sans", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #c0caf5;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+/* Base window — fully transparent so Hyprland blur shines through */
+window {
+    background: transparent;
+}
+
+
+/* =================================================================== */
+/* NOTIFICATION POPUP — GLASSMORPHIC CARDS                              */
+/* =================================================================== */
+
+/* -- Row container -------------------------------------------------- */
+.notification-row {
+    outline: none;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s ease;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+    background: transparent;
+}
+
+/* -- The notification card itself ----------------------------------- */
+.notification {
+    background: rgba(22, 23, 34, 0.85);
+    border: 1px solid rgba(41, 46, 66, 0.6);
+    border-radius: 16px;
+    padding: 0;
+    margin: 6px 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+                0 2px 8px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(192, 202, 245, 0.04);
+    transition: all 0.2s ease;
+}
+
+.notification:hover {
+    background: rgba(31, 35, 53, 0.92);
+    border-color: rgba(122, 162, 247, 0.35);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                0 2px 12px rgba(122, 162, 247, 0.08),
+                inset 0 1px 0 rgba(192, 202, 245, 0.06);
+    transform: scale(1.005);
+}
+
+/* -- Notification background wrapper -------------------------------- */
+.notification-background {
+    background: transparent;
+    border-radius: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+/* -- Content area --------------------------------------------------- */
+.notification-content {
+    padding: 14px 18px;
+    background: transparent;
+    border-radius: 16px;
+}
+
+/* -- Default action wrapper ----------------------------------------- */
+.notification-default-action {
+    background: transparent;
+    border-radius: 16px;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s ease;
+}
+
+.notification-default-action:hover {
+    background: transparent;
+}
+
+
+/* =================================================================== */
+/* TYPOGRAPHY HIERARCHY                                                 */
+/* =================================================================== */
+
+/* -- Summary / title ------------------------------------------------ */
+.summary {
+    font-size: 14px;
+    font-weight: 700;
+    color: #c0caf5;
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+}
+
+/* -- Body text (smaller than title for hierarchy) ------------------- */
+.body {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: #a9b1d6;
+    line-height: 1.5;
+}
+
+/* -- Timestamp ------------------------------------------------------ */
+.time {
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #565f89;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+/* -- App name / source label ---------------------------------------- */
+.app-name {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #7aa2f7;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.85;
+}
+
+
+/* =================================================================== */
+/* NOTIFICATION IMAGE & ICON                                            */
+/* =================================================================== */
+
+.notification-image {
+    border-radius: 12px;
+    margin-right: 14px;
+    -gtk-icon-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.notification-icon {
+    padding: 4px;
+}
+
+.image {
+    border-radius: 12px;
+    margin-right: 14px;
+}
+
+
+/* =================================================================== */
+/* CLOSE BUTTON — HIDDEN UNTIL HOVER, RED ACCENT                       */
+/* =================================================================== */
+
+.close-button {
+    background: rgba(41, 46, 66, 0.0);
+    color: rgba(86, 95, 137, 0.0);
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    margin: 6px 6px 0 0;
+    min-width: 24px;
+    min-height: 24px;
+    transition: all 0.2s ease;
+    opacity: 0;
+}
+
+/* Reveal close button on notification hover */
+.notification:hover .close-button {
+    opacity: 1;
+    background: rgba(247, 118, 142, 0.1);
+    color: #565f89;
+}
+
+.close-button:hover {
+    opacity: 1 !important;
+    background: rgba(247, 118, 142, 0.25) !important;
+    color: #f7768e !important;
+    transform: scale(1.1);
+}
+
+.close-button:active {
+    background: rgba(247, 118, 142, 0.4) !important;
+    color: #f7768e !important;
+    transform: scale(0.95);
+}
+
+
+/* =================================================================== */
+/* NOTIFICATION ACTION BUTTONS                                          */
+/* =================================================================== */
+
+.notification-action {
+    background: rgba(36, 40, 59, 0.7);
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.6);
+    border-radius: 12px;
+    padding: 8px 16px;
+    margin: 4px 4px 10px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+}
+
+.notification-action:hover {
+    background: rgba(122, 162, 247, 0.12);
+    color: #c0caf5;
+    border-color: rgba(122, 162, 247, 0.3);
+    transform: scale(1.02);
+}
+
+.notification-action:active {
+    background: rgba(122, 162, 247, 0.2);
+    transform: scale(0.98);
+}
+
+.notification-action:first-child {
+    margin-left: 14px;
+}
+
+.notification-action:last-child {
+    margin-right: 14px;
+}
+
+
+/* =================================================================== */
+/* INLINE REPLY FIELD                                                   */
+/* =================================================================== */
+
+.inline-reply {
+    background: rgba(36, 40, 59, 0.6);
+    color: #c0caf5;
+    border: 1px solid rgba(41, 46, 66, 0.5);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 4px 14px 10px 14px;
+    caret-color: #7aa2f7;
+    transition: all 0.2s ease;
+}
+
+.inline-reply:focus {
+    border-color: rgba(122, 162, 247, 0.5);
+    background: rgba(36, 40, 59, 0.8);
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.1);
+}
+
+
+/* =================================================================== */
+/* PROGRESS BARS — GRADIENT FILL (BLUE -> PURPLE)                       */
+/* =================================================================== */
+
+.notification progressbar {
+    border-radius: 6px;
+    min-height: 8px;
+    margin: 6px 0 2px 0;
+}
+
+progressbar,
+progress,
+trough {
+    border-radius: 6px;
+    min-height: 8px;
+}
+
+trough {
+    background: rgba(41, 46, 66, 0.8);
+}
+
+progress {
+    background: linear-gradient(
+        90deg,
+        #7aa2f7 0%,
+        #bb9af7 60%,
+        #7dcfff 100%
+    );
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(122, 162, 247, 0.25);
+}
+
+/* Override for levelbars (volume / brightness OSD) */
+levelbar trough block.filled {
+    background: linear-gradient(
+        90deg,
+        #7aa2f7 0%,
+        #bb9af7 100%
+    );
+    border-radius: 6px;
+}
+
+levelbar trough block.empty {
+    background: rgba(41, 46, 66, 0.6);
+}
+
+
+/* =================================================================== */
+/* URGENCY LEVELS                                                       */
+/* =================================================================== */
+
+/* -- Low urgency: subdued, no border highlight --------------------- */
+.low {
+    border-color: rgba(41, 46, 66, 0.3);
+    opacity: 0.88;
+}
+
+.low .summary {
+    color: #a9b1d6;
+    font-weight: 600;
+}
+
+.low .body {
+    color: #565f89;
+}
+
+.low:hover {
+    opacity: 1;
+    border-color: rgba(41, 46, 66, 0.5);
+}
+
+/* -- Normal urgency: subtle blue left-border accent ---------------- */
+.normal {
+    border-left: 3px solid #7aa2f7;
+}
+
+.normal:hover {
+    border-left: 3px solid #7aa2f7;
+    border-top-color: rgba(122, 162, 247, 0.2);
+    border-right-color: rgba(122, 162, 247, 0.2);
+    border-bottom-color: rgba(122, 162, 247, 0.2);
+}
+
+/* -- Critical urgency: red left-border + glow --------------------- */
+.critical {
+    background: rgba(31, 35, 53, 0.9);
+    border-left: 3px solid #f7768e;
+    border-color: rgba(247, 118, 142, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+                0 0 20px rgba(247, 118, 142, 0.08),
+                inset 0 1px 0 rgba(247, 118, 142, 0.04);
+    animation: critical-pulse 3s ease-in-out infinite;
+}
+
+.critical .summary {
+    color: #f7768e;
+    font-weight: 800;
+}
+
+.critical .body {
+    color: #c0caf5;
+}
+
+.critical .app-name {
+    color: #f7768e;
+}
+
+.critical:hover {
+    background: rgba(36, 40, 59, 0.95);
+    border-left: 3px solid #f7768e;
+    border-color: rgba(247, 118, 142, 0.45);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                0 0 24px rgba(247, 118, 142, 0.12);
+}
+
+@keyframes critical-pulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 16px rgba(247, 118, 142, 0.06); }
+    50%      { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(247, 118, 142, 0.12); }
+}
+
+
+/* =================================================================== */
+/* CONTROL CENTER PANEL — FLOATING GLASS PANEL                          */
+/* =================================================================== */
+
+.control-center {
+    background: rgba(22, 23, 34, 0.85);
+    border: 1px solid rgba(41, 46, 66, 0.5);
+    border-radius: 20px;
+    padding: 12px;
+    margin: 8px;
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.55),
+                0 4px 16px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(192, 202, 245, 0.03);
+    transition: all 0.3s ease;
+}
+
+/* -- Scrollable notification list ----------------------------------- */
+.control-center-list {
+    background: transparent;
+    padding: 4px 0;
+}
+
+/* -- Notifications inside control center inherit glass card style --- */
+.control-center .notification-row .notification-background .notification {
+    background: rgba(26, 27, 38, 0.7);
+    border: 1px solid rgba(41, 46, 66, 0.4);
+    margin: 4px 6px;
+}
+
+.control-center .notification-row .notification-background .notification:hover {
+    background: rgba(31, 35, 53, 0.85);
+}
+
+
+/* =================================================================== */
+/* CONTROL CENTER HEADER / TITLE BAR                                    */
+/* =================================================================== */
+
+.widget-title {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px 4px 8px 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #7aa2f7;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-title > label {
+    color: #7aa2f7;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+
+/* -- Clear All button (pill shape) ---------------------------------- */
+.widget-title > button {
+    background: rgba(36, 40, 59, 0.6);
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.4);
+    border-radius: 20px;
+    padding: 4px 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.widget-title > button:hover {
+    background: rgba(247, 118, 142, 0.12);
+    color: #f7768e;
+    border-color: rgba(247, 118, 142, 0.25);
+    transform: scale(1.02);
+}
+
+.widget-title > button:active {
+    background: rgba(247, 118, 142, 0.2);
+    transform: scale(0.98);
+}
+
+
+/* =================================================================== */
+/* DO NOT DISTURB TOGGLE — iOS-STYLE PILL SWITCH                        */
+/* =================================================================== */
+
+.widget-dnd {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+    transition: all 0.2s ease;
+}
+
+.widget-dnd > switch {
+    background: rgba(41, 46, 66, 0.8);
+    border-radius: 14px;
+    border: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    min-width: 48px;
+    min-height: 26px;
+    transition: all 0.25s ease;
+}
+
+.widget-dnd > switch:checked {
+    background: linear-gradient(
+        135deg,
+        rgba(122, 162, 247, 0.5) 0%,
+        rgba(187, 154, 247, 0.4) 100%
+    );
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15),
+                0 0 8px rgba(122, 162, 247, 0.15);
+}
+
+.widget-dnd > switch slider {
+    background: #565f89;
+    border-radius: 50%;
+    min-width: 22px;
+    min-height: 22px;
+    margin: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease;
+}
+
+.widget-dnd > switch:checked slider {
+    background: #c0caf5;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+                0 0 6px rgba(122, 162, 247, 0.2);
+}
+
+.widget-dnd > switch:hover slider {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4),
+                0 0 4px rgba(122, 162, 247, 0.1);
+}
+
+
+/* =================================================================== */
+/* LABEL WIDGET (custom text widgets)                                   */
+/* =================================================================== */
+
+.widget-label {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-label > label {
+    color: #a9b1d6;
+    font-size: 13px;
+}
+
+
+/* =================================================================== */
+/* MPRIS MEDIA PLAYER WIDGET                                            */
+/* =================================================================== */
+
+.widget-mpris {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 14px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-mpris-player {
+    background: transparent;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.widget-mpris-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #c0caf5;
+}
+
+.widget-mpris-subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: #a9b1d6;
+}
+
+.widget-mpris > box > button {
+    background: rgba(36, 40, 59, 0.5);
+    color: #a9b1d6;
+    border: none;
+    border-radius: 50%;
+    min-width: 36px;
+    min-height: 36px;
+    margin: 0 4px;
+    transition: all 0.2s ease;
+}
+
+.widget-mpris > box > button:hover {
+    background: rgba(122, 162, 247, 0.15);
+    color: #c0caf5;
+}
+
+.widget-mpris > box > button:active {
+    background: rgba(122, 162, 247, 0.25);
+    transform: scale(0.95);
+}
+
+.widget-mpris-album-art {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =================================================================== */
+/* INHIBITORS WIDGET                                                    */
+/* =================================================================== */
+
+.widget-inhibitors {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px;
+    font-size: 13px;
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-inhibitors > button {
+    background: rgba(36, 40, 59, 0.6);
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.widget-inhibitors > button:hover {
+    background: rgba(122, 162, 247, 0.12);
+    color: #c0caf5;
+    border-color: rgba(122, 162, 247, 0.25);
+}
+
+.widget-inhibitors > button:active {
+    transform: scale(0.97);
+}
+
+
+/* =================================================================== */
+/* BUTTONS GRID WIDGET                                                  */
+/* =================================================================== */
+
+.widget-buttons-grid {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+    background: rgba(36, 40, 59, 0.6);
+    color: #a9b1d6;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+    border-radius: 12px;
+    padding: 10px;
+    margin: 3px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+    background: rgba(122, 162, 247, 0.12);
+    color: #c0caf5;
+    border-color: rgba(122, 162, 247, 0.25);
+    transform: scale(1.04);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:active {
+    background: rgba(122, 162, 247, 0.2);
+    transform: scale(0.96);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked {
+    background: linear-gradient(
+        135deg,
+        rgba(122, 162, 247, 0.25) 0%,
+        rgba(187, 154, 247, 0.2) 100%
+    );
+    color: #7aa2f7;
+    border-color: rgba(122, 162, 247, 0.3);
+    box-shadow: 0 0 8px rgba(122, 162, 247, 0.1);
+}
+
+
+/* =================================================================== */
+/* MENUBAR WIDGET                                                       */
+/* =================================================================== */
+
+.widget-menubar {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-menubar > box > box > button {
+    background: transparent;
+    color: #a9b1d6;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.widget-menubar > box > box > button:hover {
+    background: rgba(122, 162, 247, 0.1);
+    color: #c0caf5;
+}
+
+
+/* =================================================================== */
+/* VOLUME WIDGET                                                        */
+/* =================================================================== */
+
+.widget-volume {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+.widget-volume > box > button {
+    background: transparent;
+    color: #a9b1d6;
+    border: none;
+    border-radius: 10px;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+}
+
+.widget-volume > box > button:hover {
+    background: rgba(122, 162, 247, 0.1);
+    color: #7aa2f7;
+}
+
+scale trough {
+    background: rgba(41, 46, 66, 0.6);
+    border-radius: 6px;
+    min-height: 8px;
+}
+
+scale trough highlight {
+    background: linear-gradient(
+        90deg,
+        #7aa2f7 0%,
+        #bb9af7 100%
+    );
+    border-radius: 6px;
+}
+
+scale slider {
+    background: #c0caf5;
+    border-radius: 50%;
+    min-width: 16px;
+    min-height: 16px;
+    margin: -4px 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.15s ease;
+}
+
+scale slider:hover {
+    background: #7aa2f7;
+    box-shadow: 0 1px 6px rgba(122, 162, 247, 0.3);
+}
+
+
+/* =================================================================== */
+/* BACKLIGHT WIDGET                                                     */
+/* =================================================================== */
+
+.widget-backlight {
+    background: rgba(31, 35, 53, 0.6);
+    border-radius: 14px;
+    padding: 10px 18px;
+    margin: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.3);
+}
+
+
+/* =================================================================== */
+/* NOTIFICATION GROUP HEADERS                                           */
+/* =================================================================== */
+
+.notification-group-headers {
+    font-weight: 700;
+    font-size: 12px;
+    color: #7aa2f7;
+    padding: 8px 14px 4px 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.notification-group-close-button,
+.notification-group-collapse-button {
+    background: transparent;
+    color: #565f89;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    min-width: 24px;
+    min-height: 24px;
+    transition: all 0.2s ease;
+}
+
+.notification-group-close-button:hover,
+.notification-group-collapse-button:hover {
+    color: #7aa2f7;
+    background: rgba(122, 162, 247, 0.08);
+}
+
+/* -- Notification group child spacing ------------------------------ */
+.notification-group-headers,
+.notification-group {
+    margin: 0 4px;
+}
+
+
+/* =================================================================== */
+/* NOTIFICATION COUNT BADGE                                             */
+/* =================================================================== */
+
+.notification-group-headers > label.count {
+    background: rgba(122, 162, 247, 0.15);
+    color: #7aa2f7;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+}
+
+
+/* =================================================================== */
+/* EMPTY STATE                                                          */
+/* =================================================================== */
+
+.blank-window {
+    background: transparent;
+}
+
+.widget-title > label#notification-count {
+    color: #565f89;
+    font-weight: 500;
+}
+
+
+/* =================================================================== */
+/* SCROLLBAR — ULTRA-THIN, ROUNDED, BLUE                                */
+/* =================================================================== */
+
+scrollbar {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    min-width: 3px;
+}
+
+scrollbar slider {
+    background: rgba(122, 162, 247, 0.2);
+    border-radius: 4px;
+    min-width: 3px;
+    min-height: 24px;
+    transition: all 0.2s ease;
+}
+
+scrollbar slider:hover {
+    background: rgba(122, 162, 247, 0.4);
+    min-width: 5px;
+}
+
+scrollbar slider:active {
+    background: rgba(122, 162, 247, 0.55);
+}
+
+.control-center scrollbar {
+    background: transparent;
+    min-width: 3px;
+}
+
+.control-center scrollbar slider {
+    background: rgba(122, 162, 247, 0.2);
+    border-radius: 4px;
+    min-width: 3px;
+    min-height: 24px;
+}
+
+.control-center scrollbar slider:hover {
+    background: rgba(122, 162, 247, 0.4);
+    min-width: 5px;
+}
+
+
+/* =================================================================== */
+/* FLOATING NOTIFICATIONS — EXTRA REFINEMENTS                           */
+/* =================================================================== */
+
+/* Stacked notification visual depth */
+.notification-row .notification-background .notification {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+                0 2px 8px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(192, 202, 245, 0.04);
+}
+
+.notification-row .notification-background .notification .notification-content {
+    border-radius: 16px;
+}
+
+/* Compact notification variant (volume / brightness OSD) */
+.notification-row .notification-background .notification.compact {
+    padding: 2px 8px;
+    border-radius: 14px;
+}
+
+.notification-row .notification-background .notification.compact .notification-content {
+    padding: 10px 14px;
+    border-radius: 14px;
+}
+
+
+/* =================================================================== */
+/* TOOLTIP STYLING                                                      */
+/* =================================================================== */
+
+tooltip {
+    background: rgba(22, 23, 34, 0.92);
+    border: 1px solid rgba(41, 46, 66, 0.6);
+    border-radius: 10px;
+    padding: 6px 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    color: #c0caf5;
+    font-size: 12px;
+}
+
+
+/* =================================================================== */
+/* SELECTION & FOCUS STATES                                             */
+/* =================================================================== */
+
+*:selected {
+    background: rgba(122, 162, 247, 0.15);
+    color: #c0caf5;
+}
+
+*:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Subtle keyboard-navigation focus ring */
+*:focus-visible {
+    outline: 2px solid rgba(122, 162, 247, 0.3);
+    outline-offset: -2px;
+    border-radius: 8px;
+}
+
+
+/* =================================================================== */
+/* SEPARATOR LINES                                                      */
+/* =================================================================== */
+
+separator {
+    background: rgba(41, 46, 66, 0.3);
+    min-height: 1px;
+    margin: 4px 12px;
+}
+
+
+/* =================================================================== */
+/* GLOBAL INTERACTION ANIMATION OVERRIDES                               */
+/* =================================================================== */
+
+button {
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transition: all 0.08s ease;
+}
+
+label {
+    transition: color 0.2s ease;
+}

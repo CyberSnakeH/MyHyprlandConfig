@@ -1,0 +1,90 @@
+/* ============================================================================
+ * Wlogout Stylesheet -- Tokyo Night Rice
+ * Power menu with rounded buttons and hover effects
+ * Author: CyberSnake
+ * Date: 2026-03-26
+ * ============================================================================ */
+
+/* --- Window background --- */
+window {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 14pt;
+    color: #c0caf5;
+    background-color: rgba(26, 27, 38, 0.88);
+}
+
+/* --- Base button styling --- */
+button {
+    background-color: #24283b;
+    border: 2px solid #3b4261;
+    border-radius: 16px;
+    margin: 12px;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: #c0caf5;
+    text-shadow: none;
+    transition: all 0.2s ease;
+}
+
+button:focus {
+    background-color: #292e42;
+    border-color: #7aa2f7;
+    outline: none;
+}
+
+button:hover {
+    background-color: #292e42;
+    border-color: #7aa2f7;
+    box-shadow: 0 4px 20px rgba(122, 162, 247, 0.25);
+}
+
+button:active {
+    background-color: #33467c;
+    border-color: #7aa2f7;
+}
+
+/* --- Individual button icons --- */
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+#lock:hover {
+    border-color: #7aa2f7;
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
+}
+#hibernate:hover {
+    border-color: #bb9af7;
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+#logout:hover {
+    border-color: #e0af68;
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}
+#shutdown:hover {
+    border-color: #f7768e;
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+}
+#suspend:hover {
+    border-color: #7dcfff;
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}
+#reboot:hover {
+    border-color: #9ece6a;
+}

@@ -1,0 +1,241 @@
+/* ================================================================
+   WAYBAR — TOKYO NIGHT
+   Clean floating pill-bar — proven GTK CSS
+   ================================================================ */
+
+@define-color bg      rgba(26, 27, 38, 0.92);
+@define-color bg2     rgba(31, 35, 53, 0.95);
+@define-color border  rgba(41, 46, 66, 0.7);
+@define-color blue    #7aa2f7;
+@define-color purple  #bb9af7;
+@define-color cyan    #7dcfff;
+@define-color green   #9ece6a;
+@define-color orange  #e0af68;
+@define-color red     #f7768e;
+@define-color teal    #73daca;
+@define-color fg      #c0caf5;
+@define-color fg-dim  #a9b1d6;
+@define-color muted   #545c7e;
+
+@keyframes blink {
+    to { opacity: 0.3; }
+}
+
+/* ── Global ──────────────────────────────────────────────── */
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @fg;
+}
+
+/* ── Pill Groups ─────────────────────────────────────────── */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: @bg;
+    border-radius: 14px;
+    border: 1px solid @border;
+    padding: 0 4px;
+    margin: 0 4px;
+}
+
+/* ── All Modules Base ────────────────────────────────────── */
+#workspaces,
+#window,
+#clock,
+#mpris,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#tray,
+#custom-power,
+#custom-weather,
+#custom-updates {
+    padding: 4px 10px;
+    margin: 3px 1px;
+    border-radius: 10px;
+    transition: all 200ms ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   WORKSPACES — the star of the bar
+   ══════════════════════════════════════════════════════════ */
+#workspaces {
+    padding: 2px 4px;
+}
+
+#workspaces button {
+    color: @muted;
+    background: transparent;
+    padding: 4px 10px;
+    margin: 2px 2px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+#workspaces button:hover {
+    color: @fg-dim;
+    background: rgba(122, 162, 247, 0.10);
+}
+
+#workspaces button.active {
+    color: #1a1b26;
+    background: @blue;
+    font-weight: 700;
+    padding: 4px 12px;
+}
+
+#workspaces button.special {
+    color: @purple;
+    background: rgba(187, 154, 247, 0.15);
+}
+
+#workspaces button.urgent {
+    color: @red;
+    background: rgba(247, 118, 142, 0.20);
+    animation: blink 0.8s ease infinite alternate;
+}
+
+#workspaces button.empty {
+    color: rgba(84, 92, 126, 0.35);
+    padding: 4px 6px;
+}
+
+/* ── Window Title ────────────────────────────────────────── */
+#window {
+    color: @muted;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* ── Clock ───────────────────────────────────────────────── */
+#clock {
+    color: @cyan;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 16px;
+}
+
+/* ── MPRIS ───────────────────────────────────────────────── */
+#mpris {
+    color: @green;
+    font-size: 12px;
+}
+#mpris.paused {
+    color: @muted;
+    font-style: italic;
+}
+
+/* ── Weather ─────────────────────────────────────────────── */
+#custom-weather {
+    color: @cyan;
+}
+
+/* ── Volume ──────────────────────────────────────────────── */
+#pulseaudio {
+    color: @purple;
+}
+#pulseaudio.muted {
+    color: @muted;
+}
+#pulseaudio:hover {
+    background: rgba(187, 154, 247, 0.10);
+}
+
+/* ── Network ─────────────────────────────────────────────── */
+#network {
+    color: @blue;
+    margin-right: 8px;
+}
+#network.disconnected {
+    color: @red;
+}
+#network:hover {
+    background: rgba(122, 162, 247, 0.10);
+}
+
+/* ── CPU ─────────────────────────────────────────────────── */
+#cpu {
+    color: @orange;
+}
+#cpu.critical {
+    color: @red;
+    animation: blink 0.6s ease infinite alternate;
+}
+
+/* ── Memory ──────────────────────────────────────────────── */
+#memory {
+    color: @green;
+}
+#memory.critical {
+    color: @red;
+    animation: blink 0.6s ease infinite alternate;
+}
+
+/* ── Disk ────────────────────────────────────────────────── */
+#disk {
+    color: #ff9e64;
+}
+
+/* ── Temperature ─────────────────────────────────────────── */
+#temperature {
+    color: @teal;
+    margin-right: 8px;
+}
+#temperature.critical {
+    color: @red;
+    animation: blink 0.5s ease infinite alternate;
+}
+
+/* ── Updates ─────────────────────────────────────────────── */
+#custom-updates {
+    color: @purple;
+}
+
+/* ── Tray ────────────────────────────────────────────────── */
+#tray {
+    padding: 4px 6px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: rgba(247, 118, 142, 0.12);
+    border-radius: 8px;
+}
+
+/* ── Power Button ────────────────────────────────────────── */
+#custom-power {
+    color: @red;
+    font-size: 15px;
+    padding: 4px 12px;
+    margin-right: 2px;
+    border-radius: 0 12px 12px 0;
+}
+#custom-power:hover {
+    background: rgba(247, 118, 142, 0.18);
+}
+
+/* ── Tooltip ─────────────────────────────────────────────── */
+tooltip {
+    background: rgba(22, 23, 34, 0.98);
+    border: 1px solid @border;
+    border-radius: 12px;
+    color: @fg;
+}
+tooltip label {
+    color: @fg;
+    font-size: 12px;
+}

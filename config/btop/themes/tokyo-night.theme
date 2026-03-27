@@ -1,0 +1,106 @@
+# ============================================================================
+# btop Tokyo Night Theme
+# Custom theme matching the Tokyo Night Hyprland rice
+# Author: CyberSnake
+# Date: 2026-03-26
+# ============================================================================
+
+# Main background/foreground
+theme[main_bg]="#1a1b26"
+theme[main_fg]="#c0caf5"
+
+# Title color
+theme[title]="#c0caf5"
+
+# Highlight foreground
+theme[hi_fg]="#7aa2f7"
+
+# Selected item
+theme[selected_bg]="#33467c"
+theme[selected_fg]="#c0caf5"
+
+# Inactive/disabled text
+theme[inactive_fg]="#545c7e"
+
+# Graph text
+theme[graph_text]="#a9b1d6"
+
+# Meter gradients (green -> yellow -> red)
+theme[meter_bg]="#24283b"
+
+# Process misc
+theme[proc_misc]="#7dcfff"
+
+# ---------------------------------------------------------------------------
+# CPU box
+# ---------------------------------------------------------------------------
+theme[cpu_box]="#394260"
+
+# ---------------------------------------------------------------------------
+# Memory box
+# ---------------------------------------------------------------------------
+theme[mem_box]="#394260"
+
+# ---------------------------------------------------------------------------
+# Network box
+# ---------------------------------------------------------------------------
+theme[net_box]="#394260"
+
+# ---------------------------------------------------------------------------
+# Process box
+# ---------------------------------------------------------------------------
+theme[proc_box]="#394260"
+
+# Divider line
+theme[div_line]="#3b4261"
+
+# ---------------------------------------------------------------------------
+# Temperature gradient (cool -> hot)
+# ---------------------------------------------------------------------------
+theme[temp_start]="#9ece6a"
+theme[temp_mid]="#e0af68"
+theme[temp_end]="#f7768e"
+
+# ---------------------------------------------------------------------------
+# CPU gradient
+# ---------------------------------------------------------------------------
+theme[cpu_start]="#9ece6a"
+theme[cpu_mid]="#e0af68"
+theme[cpu_end]="#f7768e"
+
+# ---------------------------------------------------------------------------
+# Memory: free / cached / available / used
+# ---------------------------------------------------------------------------
+theme[free_start]="#9ece6a"
+theme[free_mid]="#73daca"
+theme[free_end]="#7dcfff"
+
+theme[cached_start]="#bb9af7"
+theme[cached_mid]="#9d7cd8"
+theme[cached_end]="#7aa2f7"
+
+theme[available_start]="#7dcfff"
+theme[available_mid]="#7aa2f7"
+theme[available_end]="#bb9af7"
+
+theme[used_start]="#e0af68"
+theme[used_mid]="#ff9e64"
+theme[used_end]="#f7768e"
+
+# ---------------------------------------------------------------------------
+# Network: download / upload
+# ---------------------------------------------------------------------------
+theme[download_start]="#7dcfff"
+theme[download_mid]="#7aa2f7"
+theme[download_end]="#bb9af7"
+
+theme[upload_start]="#9ece6a"
+theme[upload_mid]="#73daca"
+theme[upload_end]="#7dcfff"
+
+# ---------------------------------------------------------------------------
+# Process gradients
+# ---------------------------------------------------------------------------
+theme[process_start]="#7aa2f7"
+theme[process_mid]="#bb9af7"
+theme[process_end]="#f7768e"

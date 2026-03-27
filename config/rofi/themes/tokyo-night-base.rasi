@@ -1,0 +1,245 @@
+/* ---------------------------------------------------------------
+ * Rofi Theme — Base Selectors (color-independent)
+ * Author: CyberSnake
+ * Date: 2026-03-26
+ *
+ * This file contains ONLY layout/selector rules that reference
+ * @variables defined in the color block above.
+ * It is appended after the color variables by theme-switch.sh.
+ *
+ * DO NOT add a  * {}  block here — colors are injected by the
+ * theme-switch script.  Edit theme .conf files for palette changes.
+ *
+ * Dependencies:
+ *   - rofi-wayland (COPR: solopasha/hyprland)
+ *   - JetBrainsMono Nerd Font
+ *   - Papirus-Dark icon theme
+ * --------------------------------------------------------------- */
+
+
+/* == Window ===================================================== */
+/* Floating card with deep multi-layered shadow and large radius.  */
+window {
+    location:           center;
+    anchor:             center;
+    width:              650px;
+    background-color:   @bg-window;
+    border:             2px solid;
+    border-color:       @border-window;
+    border-radius:      20px;
+    cursor:             "default";
+    padding:            0;
+    /* Transparency requires a compositor (Hyprland handles this). */
+    transparency:       "real";
+}
+
+
+/* == Main Layout Box ============================================ */
+mainbox {
+    spacing:            0;
+    padding:            20px;
+    children:           [ "inputbar", "message", "listview", "mode-switcher" ];
+    background-color:   @transparent;
+}
+
+
+/* == Input Bar (Search Field) =================================== */
+/* Inset card with its own rounded background — the "search pill".  */
+inputbar {
+    padding:            14px 20px;
+    spacing:            14px;
+    children:           [ "prompt", "entry" ];
+    background-color:   @bg-input;
+    border:             1px solid;
+    border-color:       @border-input;
+    border-radius:      14px;
+    margin:             0 0 12px 0;
+}
+
+prompt {
+    text-color:         @blue;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    font:               "JetBrainsMono Nerd Font 15";
+}
+
+entry {
+    placeholder:            "Search application...";
+    placeholder-color:      @fg-muted;
+    text-color:             @fg;
+    background-color:       @transparent;
+    cursor:                 text;
+    vertical-align:         0.5;
+    font:                   "JetBrainsMono Nerd Font 14";
+}
+
+
+/* == Message / Error Bar ======================================== */
+message {
+    padding:            10px 16px;
+    margin:             0 0 8px 0;
+    background-color:   @bg-message;
+    border-radius:      10px;
+}
+
+error-message {
+    padding:            10px 16px;
+    margin:             0 0 8px 0;
+    background-color:   @bg-error;
+    border:             1px solid;
+    border-color:       @border-error;
+    border-radius:      10px;
+}
+
+textbox {
+    text-color:         @fg-dim;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+}
+
+
+/* == Results List =============================================== */
+listview {
+    lines:              8;
+    columns:            1;
+    fixed-height:       true;
+    padding:            4px 0;
+    spacing:            4px;
+    scrollbar:          true;
+    background-color:   @transparent;
+    cursor:             "default";
+    cycle:              true;
+    dynamic:            true;
+}
+
+
+/* == Scrollbar ================================================== */
+/* Thin, rounded, accent-colored track for premium feel.           */
+scrollbar {
+    handle-width:       4px;
+    handle-color:       @scrollbar-handle;
+    border-radius:      4px;
+    padding:            0 0 0 8px;
+    background-color:   @transparent;
+}
+
+
+/* == Result Entry (row) ========================================= */
+element {
+    padding:            12px 16px;
+    spacing:            16px;
+    cursor:             pointer;
+    background-color:   @transparent;
+    border:             0 0 0 3px solid;
+    border-color:       @transparent;
+    border-radius:      12px;
+}
+
+/* -- Normal states -- */
+element normal.normal {
+    background-color:   @transparent;
+    text-color:         @fg-dim;
+}
+
+element alternate.normal {
+    background-color:   @transparent;
+    text-color:         @fg-dim;
+}
+
+/* -- Urgent states (high-priority items) -- */
+element normal.urgent {
+    background-color:   @bg-urgent;
+    text-color:         @red;
+}
+
+element alternate.urgent {
+    background-color:   @bg-urgent;
+    text-color:         @red;
+}
+
+/* -- Active states (running applications) -- */
+element normal.active {
+    background-color:   @bg-active;
+    text-color:         @green;
+    border-color:       @border-active;
+}
+
+element alternate.active {
+    background-color:   @bg-active;
+    text-color:         @green;
+    border-color:       @border-active;
+}
+
+/* -- Selected states -------------------------------------------- */
+/* The hero interaction: accent glow bar on the left, tinted bg.   */
+element selected.normal {
+    background-color:   @bg-entry-selected;
+    border-color:       @border-selected;
+    text-color:         @fg-bright;
+}
+
+element selected.urgent {
+    background-color:   @bg-selected-urgent;
+    border-color:       @red;
+    text-color:         @red;
+}
+
+element selected.active {
+    background-color:   @bg-selected-active;
+    border-color:       @green;
+    text-color:         @green;
+}
+
+
+/* == Entry Icon ================================================= */
+element-icon {
+    size:               36px;
+    cursor:             inherit;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    border-radius:      8px;
+}
+
+element-icon selected {
+    /* Slightly emphasize the icon on selection via text-color.    */
+    text-color:         @fg-bright;
+}
+
+
+/* == Entry Text ================================================= */
+element-text {
+    text-color:         inherit;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    highlight:          bold underline;
+}
+
+element-text selected {
+    text-color:         @fg-bright;
+    font:               "JetBrainsMono Nerd Font Bold 13";
+}
+
+
+/* == Mode Switcher ============================================== */
+/* Pill-shaped tab bar at the bottom for switching modes.           */
+mode-switcher {
+    spacing:            8px;
+    margin:             12px 0 0 0;
+    background-color:   @transparent;
+}
+
+button {
+    padding:            8px 18px;
+    background-color:   @transparent;
+    text-color:         @fg-muted;
+    border-radius:      10px;
+    cursor:             pointer;
+    font:               "JetBrainsMono Nerd Font 11";
+}
+
+button selected {
+    background-color:   @bg-mode-active;
+    text-color:         @fg;
+    border:             1px solid;
+    border-color:       @border-mode-active;
+}

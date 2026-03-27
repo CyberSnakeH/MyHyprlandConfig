@@ -1,0 +1,30 @@
+/* ---------------------------------------------------------------
+ * Rofi Configuration — Tokyo Night Hyprland Rice
+ * Author: CyberSnake
+ * Date: 2026-03-26
+ *
+ * Launcher configuration with fuzzy matching, icon support,
+ * and mouse-friendly interaction. Replaces Wofi.
+ * --------------------------------------------------------------- */
+
+configuration {
+    modi:                "drun,run,filebrowser,window";
+    show-icons:          true;
+    icon-theme:          "Papirus-Dark";
+    font:                "JetBrainsMono Nerd Font 12";
+    drun-display-format: "{name}";
+    display-drun:        "  Apps";
+    display-run:         "  Run";
+    display-filebrowser: "  Files";
+    display-window:      "  Windows";
+    hover-select:        true;
+    me-select-entry:     "";
+    me-accept-entry:     "MousePrimary";
+    terminal:            "kitty";
+    matching:            "fuzzy";
+    scroll-method:       0;
+    disable-history:     false;
+    sorting-method:      "fzf";
+}
+
+@theme "~/.config/rofi/themes/tokyo-night.rasi"

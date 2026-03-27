@@ -1,0 +1,275 @@
+/* ================================================================
+   WAYBAR — Base Stylesheet (color-independent)
+   Part of: Hyprland Rice Theme System
+   Author:  CyberSnake
+   Date:    2026-03-26
+
+   This file contains ALL selectors and layout rules for Waybar.
+   Color variables (@define-color) are injected by theme-switch.sh
+   into style.css, which then @imports or appends this file.
+
+   Do NOT add @define-color lines here — edit theme .conf files instead.
+   ================================================================ */
+
+@keyframes blink {
+    to { opacity: 0.3; }
+}
+
+/* ── Global ──────────────────────────────────────────────── */
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @fg;
+}
+
+/* ── Pill Groups ─────────────────────────────────────────── */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: @bg;
+    border-radius: 14px;
+    border: 1px solid @border;
+    padding: 0 4px;
+    margin: 0 4px;
+}
+
+/* ── All Modules Base ────────────────────────────────────── */
+#workspaces,
+#window,
+#clock,
+#mpris,
+#pulseaudio,
+#bluetooth,
+#network,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#battery,
+#tray,
+#custom-separator,
+#custom-separator-right,
+#custom-power,
+#custom-weather,
+#custom-updates {
+    padding: 4px 10px;
+    margin: 3px 1px;
+    border-radius: 10px;
+    transition: all 200ms ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   WORKSPACES — the star of the bar
+   ══════════════════════════════════════════════════════════ */
+#workspaces {
+    padding: 2px 4px;
+}
+
+#workspaces button {
+    color: @muted;
+    background: transparent;
+    padding: 4px 10px;
+    margin: 2px 2px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+#workspaces button:hover {
+    color: @fg-dim;
+    background: alpha(@blue, 0.10);
+}
+
+#workspaces button.active {
+    color: @bg;
+    background: @blue;
+    font-weight: 700;
+    padding: 4px 12px;
+}
+
+#workspaces button.special {
+    color: @purple;
+    background: alpha(@purple, 0.15);
+}
+
+#workspaces button.urgent {
+    color: @red;
+    background: alpha(@red, 0.20);
+    animation: blink 0.8s ease infinite alternate;
+}
+
+#workspaces button.empty {
+    color: alpha(@muted, 0.35);
+    padding: 4px 6px;
+}
+
+/* ── Window Title ────────────────────────────────────────── */
+#window {
+    color: @muted;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* ── Clock ───────────────────────────────────────────────── */
+#clock {
+    color: @cyan;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 16px;
+}
+
+/* ── MPRIS ───────────────────────────────────────────────── */
+#mpris {
+    color: @green;
+    font-size: 12px;
+}
+#mpris.paused {
+    color: @muted;
+    font-style: italic;
+}
+
+/* ── Weather ─────────────────────────────────────────────── */
+#custom-weather {
+    color: @cyan;
+}
+
+/* ── Separator ───────────────────────────────────────────── */
+#custom-separator,
+#custom-separator-right {
+    color: alpha(@muted, 0.3);
+    font-size: 14px;
+    padding: 0 2px;
+}
+
+/* ── Volume ──────────────────────────────────────────────── */
+#pulseaudio {
+    color: @purple;
+}
+#pulseaudio.muted {
+    color: @muted;
+}
+#pulseaudio:hover {
+    background: alpha(@purple, 0.10);
+}
+
+/* ── Bluetooth ───────────────────────────────────────────── */
+#bluetooth {
+    color: @cyan;
+}
+#bluetooth.off,
+#bluetooth.disabled {
+    color: @muted;
+}
+#bluetooth.connected {
+    color: @blue;
+}
+
+/* ── Network ─────────────────────────────────────────────── */
+#network {
+    color: @blue;
+}
+#network.disconnected {
+    color: @red;
+}
+#network:hover {
+    background: alpha(@blue, 0.10);
+}
+
+/* ── CPU ─────────────────────────────────────────────────── */
+#cpu {
+    color: @orange;
+}
+#cpu.critical {
+    color: @red;
+    animation: blink 0.6s ease infinite alternate;
+}
+
+/* ── Memory ──────────────────────────────────────────────── */
+#memory {
+    color: @green;
+}
+#memory.critical {
+    color: @red;
+    animation: blink 0.6s ease infinite alternate;
+}
+
+/* ── Disk ────────────────────────────────────────────────── */
+#disk {
+    color: @orange;
+}
+
+/* ── Temperature ─────────────────────────────────────────── */
+#temperature {
+    color: @teal;
+}
+#temperature.critical {
+    color: @red;
+    animation: blink 0.5s ease infinite alternate;
+}
+
+/* ── Battery ─────────────────────────────────────────────── */
+#battery {
+    color: @green;
+}
+#battery.warning {
+    color: @orange;
+}
+#battery.critical {
+    color: @red;
+    animation: blink 0.8s ease infinite alternate;
+}
+#battery.charging {
+    color: @teal;
+}
+#battery.plugged {
+    color: @green;
+}
+
+/* ── Updates ─────────────────────────────────────────────── */
+#custom-updates {
+    color: @purple;
+}
+
+/* ── Tray ────────────────────────────────────────────────── */
+#tray {
+    padding: 4px 6px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: alpha(@red, 0.12);
+    border-radius: 8px;
+}
+
+/* ── Power Button ────────────────────────────────────────── */
+#custom-power {
+    color: @red;
+    font-size: 15px;
+    padding: 4px 12px;
+    margin-right: 2px;
+    border-radius: 0 12px 12px 0;
+}
+#custom-power:hover {
+    background: alpha(@red, 0.18);
+}
+
+/* ── Tooltip ─────────────────────────────────────────────── */
+tooltip {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 12px;
+    color: @fg;
+}
+tooltip label {
+    color: @fg;
+    font-size: 12px;
+}

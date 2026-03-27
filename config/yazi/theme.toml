@@ -1,0 +1,172 @@
+# ============================================================================
+# Yazi Theme -- Tokyo Night Rice
+# File manager theming with Tokyo Night palette
+# Author: CyberSnake
+# Date: 2026-03-26
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Manager panel
+# ---------------------------------------------------------------------------
+[manager]
+cwd = { fg = "#7aa2f7", bold = true }
+
+# Hovered item
+hovered = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+preview_hovered = { underline = true }
+
+# Find matches
+find_keyword = { fg = "#e0af68", bold = true, italic = true, underline = true }
+find_position = { fg = "#bb9af7", bg = "reset", italic = true }
+
+# Markers (selected/unselected in columns)
+marker_selected = { fg = "#9ece6a", bg = "#9ece6a" }
+marker_copied   = { fg = "#e0af68", bg = "#e0af68" }
+marker_cut      = { fg = "#f7768e", bg = "#f7768e" }
+
+# Tab styling
+tab_active   = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+tab_inactive = { fg = "#a9b1d6", bg = "#24283b" }
+tab_width    = 1
+
+# Counting
+count_copied   = { fg = "#1a1b26", bg = "#e0af68" }
+count_cut      = { fg = "#1a1b26", bg = "#f7768e" }
+count_selected = { fg = "#1a1b26", bg = "#9ece6a" }
+
+# Borders
+border_symbol = "│"
+border_style  = { fg = "#545c7e" }
+
+# ---------------------------------------------------------------------------
+# Status bar
+# ---------------------------------------------------------------------------
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#24283b", bg = "#24283b" }
+
+# Mode indicators
+mode_normal = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+mode_select = { fg = "#1a1b26", bg = "#9ece6a", bold = true }
+mode_unset  = { fg = "#1a1b26", bg = "#f7768e", bold = true }
+
+# Progress bar
+progress_label  = { fg = "#c0caf5", bold = true }
+progress_normal = { fg = "#7aa2f7", bg = "#24283b" }
+progress_error  = { fg = "#f7768e", bg = "#24283b" }
+
+# Permission colors
+permissions_t = { fg = "#7aa2f7" }
+permissions_r = { fg = "#e0af68" }
+permissions_w = { fg = "#f7768e" }
+permissions_x = { fg = "#9ece6a" }
+permissions_s = { fg = "#545c7e" }
+
+# ---------------------------------------------------------------------------
+# Input dialog
+# ---------------------------------------------------------------------------
+[input]
+border   = { fg = "#7aa2f7" }
+title    = { fg = "#7aa2f7" }
+value    = { fg = "#c0caf5" }
+selected = { reversed = true }
+
+# ---------------------------------------------------------------------------
+# Completion menu
+# ---------------------------------------------------------------------------
+[completion]
+border   = { fg = "#545c7e" }
+active   = { fg = "#1a1b26", bg = "#7aa2f7" }
+inactive = { fg = "#a9b1d6" }
+
+# Icon hint text
+icon_file    = ""
+icon_folder  = ""
+icon_command = ""
+
+# ---------------------------------------------------------------------------
+# Tasks manager
+# ---------------------------------------------------------------------------
+[tasks]
+border  = { fg = "#7aa2f7" }
+title   = { fg = "#7aa2f7" }
+hovered = { fg = "#1a1b26", bg = "#7aa2f7" }
+
+# ---------------------------------------------------------------------------
+# Which key popup
+# ---------------------------------------------------------------------------
+[which]
+cols = 3
+mask = { bg = "#24283b" }
+cand = { fg = "#7dcfff" }
+rest = { fg = "#545c7e" }
+desc = { fg = "#bb9af7" }
+separator = "  "
+separator_style = { fg = "#545c7e" }
+
+# ---------------------------------------------------------------------------
+# Help dialog
+# ---------------------------------------------------------------------------
+[help]
+on      = { fg = "#7aa2f7" }
+run     = { fg = "#bb9af7" }
+desc    = { fg = "#a9b1d6" }
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#545c7e", bg = "#1a1b26" }
+
+# ---------------------------------------------------------------------------
+# File type rules -- icon colors by extension/name
+# ---------------------------------------------------------------------------
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "#bb9af7" },
+
+    # Videos
+    { mime = "video/*", fg = "#e0af68" },
+
+    # Audio
+    { mime = "audio/*", fg = "#7dcfff" },
+
+    # Archives
+    { mime = "application/zip",       fg = "#f7768e" },
+    { mime = "application/gzip",      fg = "#f7768e" },
+    { mime = "application/x-tar",     fg = "#f7768e" },
+    { mime = "application/x-bzip2",   fg = "#f7768e" },
+    { mime = "application/x-7z*",     fg = "#f7768e" },
+    { mime = "application/x-rar*",    fg = "#f7768e" },
+    { mime = "application/x-xz",      fg = "#f7768e" },
+    { mime = "application/zstd",      fg = "#f7768e" },
+
+    # Documents
+    { mime = "application/pdf",          fg = "#f7768e" },
+    { mime = "application/msword",       fg = "#7aa2f7" },
+    { mime = "application/vnd.openxml*", fg = "#7aa2f7" },
+
+    # Code / text
+    { mime = "text/*",             fg = "#9ece6a" },
+    { mime = "application/json",   fg = "#e0af68" },
+    { mime = "application/xml",    fg = "#e0af68" },
+    { mime = "application/toml",   fg = "#e0af68" },
+    { mime = "application/yaml",   fg = "#e0af68" },
+    { mime = "application/x-sh",   fg = "#9ece6a" },
+
+    # Executables
+    { mime = "application/x-executable",   fg = "#9ece6a", bold = true },
+    { mime = "application/x-sharedlib",    fg = "#9ece6a" },
+
+    # Symlinks
+    { is = "link",    fg = "#7dcfff", italic = true },
+    { is = "orphan",  fg = "#f7768e", italic = true },
+
+    # Directories
+    { is = "dir",     fg = "#7aa2f7", bold = true },
+
+    # Hidden files
+    { is = "hidden",  fg = "#545c7e" },
+
+    # Fallback
+    { name = "*",     fg = "#a9b1d6" },
+]

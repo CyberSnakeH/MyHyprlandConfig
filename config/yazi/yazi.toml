@@ -1,0 +1,156 @@
+# ============================================================================
+# Yazi Main Configuration -- Tokyo Night Rice
+# Terminal file manager with vim-style navigation
+# Author: CyberSnake
+# Date: 2026-03-26
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Manager settings
+# ---------------------------------------------------------------------------
+[manager]
+ratio          = [1, 3, 4]
+sort_by        = "alphabetical"
+sort_sensitive = false
+sort_reverse   = false
+sort_dir_first = true
+sort_translit  = false
+linemode       = "size"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 5
+mouse_events   = ["click", "scroll"]
+
+# ---------------------------------------------------------------------------
+# Preview settings
+# ---------------------------------------------------------------------------
+[preview]
+tab_size        = 4
+max_width       = 1200
+max_height      = 1800
+cache_dir       = ""
+image_delay     = 30
+image_filter    = "triangle"
+image_quality   = 75
+sixel_fraction  = 15
+ueberzug_scale  = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+# ---------------------------------------------------------------------------
+# Opener definitions
+# ---------------------------------------------------------------------------
+[opener]
+edit = [
+    { run = 'nvim "$@"',  block = true, desc = "Open in Neovim",     for = "unix" },
+    { run = 'code "$@"',  orphan = true, desc = "Open in VS Code",   for = "unix" },
+]
+
+open = [
+    { run = 'xdg-open "$@"', orphan = true, desc = "Open (xdg-open)", for = "unix" },
+]
+
+reveal = [
+    { run = 'thunar "$(dirname "$1")"', orphan = true, desc = "Reveal in Thunar", for = "unix" },
+]
+
+extract = [
+    { run = 'file-roller "$@"', orphan = true, desc = "Extract with File Roller", for = "unix" },
+]
+
+play = [
+    { run = 'mpv --force-window "$@"', orphan = true, desc = "Play in mpv", for = "unix" },
+]
+
+# ---------------------------------------------------------------------------
+# Open rules -- which opener to use for which MIME type
+# ---------------------------------------------------------------------------
+[open]
+rules = [
+    # Folders
+    { name = "*/", use = [ "edit", "open", "reveal" ] },
+
+    # Text / code
+    { mime = "text/*",              use = [ "edit", "reveal" ] },
+    { mime = "application/json",    use = [ "edit", "reveal" ] },
+    { mime = "application/xml",     use = [ "edit", "reveal" ] },
+    { mime = "application/toml",    use = [ "edit", "reveal" ] },
+    { mime = "application/x-sh",    use = [ "edit", "reveal" ] },
+    { mime = "application/yaml",    use = [ "edit", "reveal" ] },
+
+    # Images
+    { mime = "image/*", use = [ "open", "reveal" ] },
+
+    # Video / audio
+    { mime = "video/*", use = [ "play", "open", "reveal" ] },
+    { mime = "audio/*", use = [ "play", "open", "reveal" ] },
+
+    # Archives
+    { mime = "application/zip",       use = [ "extract", "reveal" ] },
+    { mime = "application/gzip",      use = [ "extract", "reveal" ] },
+    { mime = "application/x-tar",     use = [ "extract", "reveal" ] },
+    { mime = "application/x-bzip2",   use = [ "extract", "reveal" ] },
+    { mime = "application/x-7z*",     use = [ "extract", "reveal" ] },
+    { mime = "application/x-rar*",    use = [ "extract", "reveal" ] },
+    { mime = "application/x-xz",      use = [ "extract", "reveal" ] },
+    { mime = "application/zstd",      use = [ "extract", "reveal" ] },
+
+    # PDF
+    { mime = "application/pdf", use = [ "open", "reveal" ] },
+
+    # Fallback
+    { name = "*", use = [ "open", "edit", "reveal" ] },
+]
+
+# ---------------------------------------------------------------------------
+# Tasks manager
+# ---------------------------------------------------------------------------
+[tasks]
+micro_workers    = 10
+macro_workers    = 25
+bizarre_retry    = 5
+image_alloc      = 536870912
+image_bound      = [0, 0]
+suppress_preload = false
+
+# ---------------------------------------------------------------------------
+# Plugin preloading
+# ---------------------------------------------------------------------------
+[plugin]
+fetchers = [
+    { id = "mime", name = "*",  run = "mime",  if = "!mime", prio = "high" },
+]
+
+preloaders = [
+    { mime = "image/{avif,hei?,jxl,svg+xml}",   run = "magick" },
+    { mime = "image/*",                          run = "image" },
+    { mime = "video/*",                          run = "video" },
+    { mime = "application/pdf",                  run = "pdf" },
+]
+
+prepend_previewers = []
+
+previewers = [
+    { name = "*/", run = "folder", sync = true },
+
+    { mime = "text/*",                 run = "code" },
+    { mime = "*/xml",                  run = "code" },
+    { mime = "*/json",                 run = "code" },
+    { mime = "*/javascript",           run = "code" },
+    { mime = "*/x-wine-extension-ini", run = "code" },
+
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+    { mime = "image/*",                run = "image" },
+    { mime = "video/*",                run = "video" },
+    { mime = "application/pdf",        run = "pdf" },
+
+    { mime = "application/zip",        run = "archive" },
+    { mime = "application/gzip",       run = "archive" },
+    { mime = "application/x-tar",      run = "archive" },
+    { mime = "application/x-bzip2",    run = "archive" },
+    { mime = "application/x-7z*",      run = "archive" },
+    { mime = "application/x-rar*",     run = "archive" },
+    { mime = "application/x-xz",       run = "archive" },
+    { mime = "application/zstd",       run = "archive" },
+
+    { name = "*", run = "file" },
+]

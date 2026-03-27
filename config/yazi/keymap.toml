@@ -1,0 +1,469 @@
+# ============================================================================
+# Yazi Keymap -- Tokyo Night Rice
+# Vim-style navigation with intuitive file operations
+# Author: CyberSnake
+# Date: 2026-03-26
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Manager mode -- main file browser
+# ---------------------------------------------------------------------------
+[[manager.keymap]]
+on   = [ "q" ]
+run  = "quit"
+desc = "Quit Yazi"
+
+[[manager.keymap]]
+on   = [ "Q" ]
+run  = "quit --no-cwd-file"
+desc = "Quit without outputting cwd"
+
+[[manager.keymap]]
+on   = [ "<Esc>" ]
+run  = "escape"
+desc = "Cancel / exit visual mode"
+
+# --- Navigation ---
+
+[[manager.keymap]]
+on   = [ "k" ]
+run  = "arrow -1"
+desc = "Move cursor up"
+
+[[manager.keymap]]
+on   = [ "j" ]
+run  = "arrow 1"
+desc = "Move cursor down"
+
+[[manager.keymap]]
+on   = [ "<Up>" ]
+run  = "arrow -1"
+desc = "Move cursor up"
+
+[[manager.keymap]]
+on   = [ "<Down>" ]
+run  = "arrow 1"
+desc = "Move cursor down"
+
+[[manager.keymap]]
+on   = [ "h" ]
+run  = "leave"
+desc = "Go to parent directory"
+
+[[manager.keymap]]
+on   = [ "l" ]
+run  = "enter"
+desc = "Enter directory / open file"
+
+[[manager.keymap]]
+on   = [ "<Left>" ]
+run  = "leave"
+desc = "Go to parent directory"
+
+[[manager.keymap]]
+on   = [ "<Right>" ]
+run  = "enter"
+desc = "Enter directory / open file"
+
+[[manager.keymap]]
+on   = [ "K" ]
+run  = "arrow -5"
+desc = "Move cursor up 5 lines"
+
+[[manager.keymap]]
+on   = [ "J" ]
+run  = "arrow 5"
+desc = "Move cursor down 5 lines"
+
+[[manager.keymap]]
+on   = [ "<S-Up>" ]
+run  = "arrow -5"
+desc = "Move cursor up 5 lines"
+
+[[manager.keymap]]
+on   = [ "<S-Down>" ]
+run  = "arrow 5"
+desc = "Move cursor down 5 lines"
+
+[[manager.keymap]]
+on   = [ "g", "g" ]
+run  = "arrow -99999999"
+desc = "Jump to top"
+
+[[manager.keymap]]
+on   = [ "G" ]
+run  = "arrow 99999999"
+desc = "Jump to bottom"
+
+# --- Opening ---
+
+[[manager.keymap]]
+on   = [ "<Enter>" ]
+run  = "open"
+desc = "Open file"
+
+[[manager.keymap]]
+on   = [ "<S-Enter>" ]
+run  = "open --interactive"
+desc = "Open file interactively (choose opener)"
+
+[[manager.keymap]]
+on   = [ "o" ]
+run  = "open"
+desc = "Open file"
+
+[[manager.keymap]]
+on   = [ "O" ]
+run  = "open --interactive"
+desc = "Open file interactively"
+
+# --- Selection ---
+
+[[manager.keymap]]
+on   = [ "<Space>" ]
+run  = [ "select --state=none", "arrow 1" ]
+desc = "Toggle selection and move down"
+
+[[manager.keymap]]
+on   = [ "<Tab>" ]
+run  = [ "select --state=none", "arrow 1" ]
+desc = "Toggle selection and move down"
+
+[[manager.keymap]]
+on   = [ "v" ]
+run  = "visual_mode"
+desc = "Enter visual mode"
+
+[[manager.keymap]]
+on   = [ "V" ]
+run  = "visual_mode --unset"
+desc = "Enter visual mode (unset)"
+
+[[manager.keymap]]
+on   = [ "<C-a>" ]
+run  = "select_all --state=true"
+desc = "Select all files"
+
+[[manager.keymap]]
+on   = [ "<C-r>" ]
+run  = "select_all --state=none"
+desc = "Invert selection"
+
+# --- File operations ---
+
+[[manager.keymap]]
+on   = [ "y" ]
+run  = [ "yank" ]
+desc = "Yank (copy) selected files"
+
+[[manager.keymap]]
+on   = [ "x" ]
+run  = [ "yank --cut" ]
+desc = "Cut selected files"
+
+[[manager.keymap]]
+on   = [ "p" ]
+run  = "paste"
+desc = "Paste yanked files"
+
+[[manager.keymap]]
+on   = [ "P" ]
+run  = "paste --force"
+desc = "Paste (overwrite existing)"
+
+[[manager.keymap]]
+on   = [ "d" ]
+run  = "remove"
+desc = "Move to trash"
+
+[[manager.keymap]]
+on   = [ "D" ]
+run  = "remove --permanently"
+desc = "Delete permanently"
+
+[[manager.keymap]]
+on   = [ "a" ]
+run  = "create"
+desc = "Create file or directory"
+
+[[manager.keymap]]
+on   = [ "r" ]
+run  = "rename --cursor=before_ext"
+desc = "Rename file"
+
+[[manager.keymap]]
+on   = [ "u" ]
+run  = "unyank"
+desc = "Cancel yank"
+
+# --- Toggles ---
+
+[[manager.keymap]]
+on   = [ "." ]
+run  = "hidden toggle"
+desc = "Toggle hidden files"
+
+[[manager.keymap]]
+on   = [ "s" ]
+run  = "sort modified --reverse=no"
+desc = "Sort by modification time"
+
+[[manager.keymap]]
+on   = [ "S" ]
+run  = "sort modified --reverse"
+desc = "Sort by modification time (reverse)"
+
+# --- Search ---
+
+[[manager.keymap]]
+on   = [ "/" ]
+run  = "find --smart"
+desc = "Find files"
+
+[[manager.keymap]]
+on   = [ "?" ]
+run  = "find --previous --smart"
+desc = "Find files (previous)"
+
+[[manager.keymap]]
+on   = [ "n" ]
+run  = "find_arrow"
+desc = "Go to next match"
+
+[[manager.keymap]]
+on   = [ "N" ]
+run  = "find_arrow --previous"
+desc = "Go to previous match"
+
+[[manager.keymap]]
+on   = [ "f" ]
+run  = "filter --smart"
+desc = "Filter files"
+
+# --- Tabs ---
+
+[[manager.keymap]]
+on   = [ "t" ]
+run  = "tab_create --current"
+desc = "Create new tab"
+
+[[manager.keymap]]
+on   = [ "1" ]
+run  = "tab_switch 0"
+desc = "Switch to tab 1"
+
+[[manager.keymap]]
+on   = [ "2" ]
+run  = "tab_switch 1"
+desc = "Switch to tab 2"
+
+[[manager.keymap]]
+on   = [ "3" ]
+run  = "tab_switch 2"
+desc = "Switch to tab 3"
+
+[[manager.keymap]]
+on   = [ "[" ]
+run  = "tab_switch -1 --relative"
+desc = "Switch to previous tab"
+
+[[manager.keymap]]
+on   = [ "]" ]
+run  = "tab_switch 1 --relative"
+desc = "Switch to next tab"
+
+[[manager.keymap]]
+on   = [ "{" ]
+run  = "tab_swap -1"
+desc = "Swap tab with previous"
+
+[[manager.keymap]]
+on   = [ "}" ]
+run  = "tab_swap 1"
+desc = "Swap tab with next"
+
+# --- Bookmarks ---
+
+[[manager.keymap]]
+on   = [ "g", "h" ]
+run  = "cd ~"
+desc = "Go to home directory"
+
+[[manager.keymap]]
+on   = [ "g", "c" ]
+run  = "cd ~/.config"
+desc = "Go to config directory"
+
+[[manager.keymap]]
+on   = [ "g", "d" ]
+run  = "cd ~/Downloads"
+desc = "Go to downloads"
+
+[[manager.keymap]]
+on   = [ "g", "p" ]
+run  = "cd ~/Projects"
+desc = "Go to projects"
+
+[[manager.keymap]]
+on   = [ "g", "t" ]
+run  = "cd /tmp"
+desc = "Go to /tmp"
+
+# --- Misc ---
+
+[[manager.keymap]]
+on   = [ "~" ]
+run  = "help"
+desc = "Open help"
+
+[[manager.keymap]]
+on   = [ "w" ]
+run  = "tasks_show"
+desc = "Show running tasks"
+
+[[manager.keymap]]
+on   = [ "z" ]
+run  = "plugin zoxide"
+desc = "Jump with zoxide"
+
+[[manager.keymap]]
+on   = [ "Z" ]
+run  = "plugin fzf"
+desc = "Jump with fzf"
+
+[[manager.keymap]]
+on   = [ "<C-z>" ]
+run  = "suspend"
+desc = "Suspend Yazi"
+
+# ---------------------------------------------------------------------------
+# Input mode
+# ---------------------------------------------------------------------------
+[[input.keymap]]
+on   = [ "<Esc>" ]
+run  = "close"
+desc = "Cancel input"
+
+[[input.keymap]]
+on   = [ "<Enter>" ]
+run  = "close --submit"
+desc = "Submit input"
+
+[[input.keymap]]
+on   = [ "<C-c>" ]
+run  = "close"
+desc = "Cancel input"
+
+# Cursor movement
+[[input.keymap]]
+on   = [ "<Left>" ]
+run  = "move -1"
+desc = "Move cursor left"
+
+[[input.keymap]]
+on   = [ "<Right>" ]
+run  = "move 1"
+desc = "Move cursor right"
+
+[[input.keymap]]
+on   = [ "<Home>" ]
+run  = "move -999"
+desc = "Move to start"
+
+[[input.keymap]]
+on   = [ "<End>" ]
+run  = "move 999"
+desc = "Move to end"
+
+# Editing
+[[input.keymap]]
+on   = [ "<Backspace>" ]
+run  = "backspace"
+desc = "Delete char before cursor"
+
+[[input.keymap]]
+on   = [ "<Delete>" ]
+run  = "delete"
+desc = "Delete char after cursor"
+
+[[input.keymap]]
+on   = [ "<C-u>" ]
+run  = "kill bol"
+desc = "Delete to start of line"
+
+[[input.keymap]]
+on   = [ "<C-k>" ]
+run  = "kill eol"
+desc = "Delete to end of line"
+
+[[input.keymap]]
+on   = [ "<C-w>" ]
+run  = "kill backward"
+desc = "Delete word backward"
+
+# Clipboard
+[[input.keymap]]
+on   = [ "<C-v>" ]
+run  = "paste"
+desc = "Paste from clipboard"
+
+# ---------------------------------------------------------------------------
+# Completion mode
+# ---------------------------------------------------------------------------
+[[completion.keymap]]
+on   = [ "<Tab>" ]
+run  = "close --submit"
+desc = "Accept completion"
+
+[[completion.keymap]]
+on   = [ "<C-k>" ]
+run  = "arrow -1"
+desc = "Previous completion"
+
+[[completion.keymap]]
+on   = [ "<C-j>" ]
+run  = "arrow 1"
+desc = "Next completion"
+
+[[completion.keymap]]
+on   = [ "<Up>" ]
+run  = "arrow -1"
+desc = "Previous completion"
+
+[[completion.keymap]]
+on   = [ "<Down>" ]
+run  = "arrow 1"
+desc = "Next completion"
+
+[[completion.keymap]]
+on   = [ "<Esc>" ]
+run  = "close"
+desc = "Cancel completion"
+
+# ---------------------------------------------------------------------------
+# Help mode
+# ---------------------------------------------------------------------------
+[[help.keymap]]
+on   = [ "<Esc>" ]
+run  = "escape"
+desc = "Close help"
+
+[[help.keymap]]
+on   = [ "q" ]
+run  = "close"
+desc = "Close help"
+
+[[help.keymap]]
+on   = [ "k" ]
+run  = "arrow -1"
+desc = "Move up"
+
+[[help.keymap]]
+on   = [ "j" ]
+run  = "arrow 1"
+desc = "Move down"
+
+[[help.keymap]]
+on   = [ "/" ]
+run  = "filter"
+desc = "Filter help entries"

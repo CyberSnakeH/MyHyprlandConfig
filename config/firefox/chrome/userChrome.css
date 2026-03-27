@@ -1,0 +1,272 @@
+/* ============================================================================
+ * Firefox userChrome.css -- Tokyo Night Rice
+ * Custom browser chrome styling with Tokyo Night palette
+ * Author: CyberSnake
+ * Date: 2026-03-26
+ *
+ * Prerequisites:
+ *   1. Navigate to about:config
+ *   2. Set toolkit.legacyUserProfileCustomizations.stylesheets = true
+ *   3. Place this file in: <firefox-profile>/chrome/userChrome.css
+ * ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+ * CSS Variables -- Tokyo Night palette
+ * --------------------------------------------------------------------------- */
+:root {
+    --tn-bg:          #1a1b26;
+    --tn-bg-dark:     #16161e;
+    --tn-bg-hl:       #292e42;
+    --tn-bg-sel:      #33467c;
+    --tn-fg:          #c0caf5;
+    --tn-fg-dim:      #a9b1d6;
+    --tn-fg-muted:    #545c7e;
+    --tn-blue:        #7aa2f7;
+    --tn-cyan:        #7dcfff;
+    --tn-teal:        #73daca;
+    --tn-green:       #9ece6a;
+    --tn-yellow:      #e0af68;
+    --tn-orange:      #ff9e64;
+    --tn-red:         #f7768e;
+    --tn-magenta:     #bb9af7;
+    --tn-border:      #3b4261;
+    --tn-radius:      8px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tab bar
+ * --------------------------------------------------------------------------- */
+#TabsToolbar {
+    background-color: var(--tn-bg-dark) !important;
+    border-bottom: 1px solid var(--tn-border) !important;
+}
+
+/* Individual tabs */
+.tab-background {
+    background-color: var(--tn-bg-dark) !important;
+    border-radius: var(--tn-radius) var(--tn-radius) 0 0 !important;
+    margin-top: 4px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Active tab */
+.tabbrowser-tab[selected="true"] .tab-background {
+    background-color: var(--tn-bg) !important;
+    border-top: 2px solid var(--tn-blue) !important;
+}
+
+/* Hovered tab */
+.tabbrowser-tab:not([selected="true"]):hover .tab-background {
+    background-color: var(--tn-bg-hl) !important;
+}
+
+/* Tab label text */
+.tab-label {
+    color: var(--tn-fg-dim) !important;
+    font-family: "JetBrainsMono Nerd Font", monospace !important;
+    font-size: 12px !important;
+}
+
+.tabbrowser-tab[selected="true"] .tab-label {
+    color: var(--tn-fg) !important;
+    font-weight: bold !important;
+}
+
+/* Tab close button */
+.tab-close-button {
+    opacity: 0.6 !important;
+}
+.tab-close-button:hover {
+    opacity: 1 !important;
+    fill: var(--tn-red) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Navigation bar
+ * --------------------------------------------------------------------------- */
+#nav-bar {
+    background-color: var(--tn-bg) !important;
+    border-bottom: 1px solid var(--tn-border) !important;
+    padding: 2px 4px !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * URL bar
+ * --------------------------------------------------------------------------- */
+#urlbar-background {
+    background-color: var(--tn-bg-hl) !important;
+    border: 1px solid var(--tn-border) !important;
+    border-radius: var(--tn-radius) !important;
+}
+
+/* URL bar focused */
+#urlbar[focused="true"] > #urlbar-background {
+    border-color: var(--tn-blue) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.25) !important;
+}
+
+/* URL bar text */
+#urlbar-input {
+    color: var(--tn-fg) !important;
+    font-family: "JetBrainsMono Nerd Font", monospace !important;
+    font-size: 13px !important;
+}
+
+/* URL bar results popup */
+.urlbarView {
+    background-color: var(--tn-bg) !important;
+    border: 1px solid var(--tn-border) !important;
+    border-radius: 0 0 var(--tn-radius) var(--tn-radius) !important;
+}
+
+.urlbarView-row:hover,
+.urlbarView-row[selected] {
+    background-color: var(--tn-bg-sel) !important;
+}
+
+.urlbarView-title,
+.urlbarView-url {
+    color: var(--tn-fg-dim) !important;
+}
+
+.urlbarView-row[selected] .urlbarView-title {
+    color: var(--tn-fg) !important;
+}
+
+.urlbarView-row[selected] .urlbarView-url {
+    color: var(--tn-cyan) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Toolbar buttons
+ * --------------------------------------------------------------------------- */
+#nav-bar toolbarbutton,
+#TabsToolbar toolbarbutton {
+    fill: var(--tn-fg-dim) !important;
+    color: var(--tn-fg-dim) !important;
+}
+
+#nav-bar toolbarbutton:hover,
+#TabsToolbar toolbarbutton:hover {
+    background-color: var(--tn-bg-hl) !important;
+    border-radius: var(--tn-radius) !important;
+    fill: var(--tn-blue) !important;
+}
+
+/* Back/Forward buttons */
+#back-button > .toolbarbutton-icon,
+#forward-button > .toolbarbutton-icon {
+    fill: var(--tn-fg-dim) !important;
+}
+
+#back-button:hover > .toolbarbutton-icon,
+#forward-button:hover > .toolbarbutton-icon {
+    fill: var(--tn-blue) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Sidebar
+ * --------------------------------------------------------------------------- */
+#sidebar-header {
+    background-color: var(--tn-bg-dark) !important;
+    border-bottom: 1px solid var(--tn-border) !important;
+    color: var(--tn-fg) !important;
+}
+
+#sidebar-box {
+    background-color: var(--tn-bg) !important;
+    border-right: 1px solid var(--tn-border) !important;
+}
+
+#sidebar {
+    background-color: var(--tn-bg) !important;
+    color: var(--tn-fg-dim) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Context menu
+ * --------------------------------------------------------------------------- */
+menupopup {
+    --panel-background: var(--tn-bg) !important;
+    --panel-border-color: var(--tn-border) !important;
+}
+
+menupopup > menuitem,
+menupopup > menu {
+    color: var(--tn-fg-dim) !important;
+    padding: 4px 8px !important;
+}
+
+menupopup > menuitem:hover,
+menupopup > menu:hover,
+menupopup > menuitem[_moz-menuactive="true"],
+menupopup > menu[_moz-menuactive="true"] {
+    background-color: var(--tn-bg-sel) !important;
+    color: var(--tn-fg) !important;
+}
+
+menupopup > menuseparator {
+    border-color: var(--tn-border) !important;
+}
+
+/* Disabled menu items */
+menupopup > menuitem[disabled="true"] {
+    color: var(--tn-fg-muted) !important;
+    opacity: 0.6 !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Findbar
+ * --------------------------------------------------------------------------- */
+findbar {
+    background-color: var(--tn-bg) !important;
+    border-top: 1px solid var(--tn-border) !important;
+    color: var(--tn-fg) !important;
+}
+
+findbar textbox {
+    background-color: var(--tn-bg-hl) !important;
+    color: var(--tn-fg) !important;
+    border: 1px solid var(--tn-border) !important;
+    border-radius: 4px !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Scrollbar styling
+ * --------------------------------------------------------------------------- */
+:root {
+    scrollbar-color: var(--tn-border) var(--tn-bg-dark) !important;
+    scrollbar-width: thin !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * New tab button
+ * --------------------------------------------------------------------------- */
+#tabs-newtab-button {
+    fill: var(--tn-fg-muted) !important;
+}
+#tabs-newtab-button:hover {
+    fill: var(--tn-blue) !important;
+    background-color: var(--tn-bg-hl) !important;
+    border-radius: var(--tn-radius) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Bookmarks bar
+ * --------------------------------------------------------------------------- */
+#PersonalToolbar {
+    background-color: var(--tn-bg) !important;
+    border-bottom: 1px solid var(--tn-border) !important;
+    padding: 2px 0 !important;
+}
+
+#PersonalToolbar toolbarbutton {
+    color: var(--tn-fg-dim) !important;
+}
+
+#PersonalToolbar toolbarbutton:hover {
+    background-color: var(--tn-bg-hl) !important;
+    color: var(--tn-fg) !important;
+    border-radius: 4px !important;
+}

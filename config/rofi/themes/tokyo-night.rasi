@@ -1,0 +1,297 @@
+/* ---------------------------------------------------------------
+ * Rofi Theme — Tokyo Night "Floating Search Modal"
+ * Author: CyberSnake
+ * Date: 2026-03-26
+ *
+ * A premium, Spotlight/Raycast-inspired floating launcher with
+ * deep translucency, layered shadows, generous spacing, and
+ * refined micro-interactions. Designed for Hyprland + Wayland.
+ *
+ * Palette (Tokyo Night Storm):
+ *   bg-deep:     #161722    bg-surface:  #1f2335
+ *   fg:          #c0caf5    fg-dim:      #a9b1d6
+ *   fg-muted:    #545c7e    placeholder: #545c7e
+ *   blue:        #7aa2f7    purple:      #bb9af7
+ *   cyan:        #7dcfff    green:       #9ece6a
+ *   red:         #f7768e    yellow:      #e0af68
+ *   border-sub:  #292e42
+ *
+ * Dependencies:
+ *   - rofi-wayland (COPR: solopasha/hyprland)
+ *   - JetBrainsMono Nerd Font
+ *   - Papirus-Dark icon theme
+ * --------------------------------------------------------------- */
+
+
+/* == Global Defaults ============================================ */
+* {
+    /* -- Backgrounds -- */
+    bg-window:          rgba ( 22, 23, 34, 0.92 );
+    bg-input:           rgba ( 31, 35, 53, 0.80 );
+    bg-input-focus:     rgba ( 31, 35, 53, 0.95 );
+    bg-entry-hover:     rgba ( 36, 40, 59, 0.50 );
+    bg-entry-selected:  rgba ( 122, 162, 247, 0.12 );
+    bg-mode-active:     rgba ( 122, 162, 247, 0.22 );
+
+    /* -- Foregrounds -- */
+    fg:                 #c0caf5;
+    fg-dim:             #a9b1d6;
+    fg-muted:           #545c7e;
+    fg-bright:          #dfe5f9;
+
+    /* -- Accents -- */
+    blue:               #7aa2f7;
+    purple:             #bb9af7;
+    cyan:               #7dcfff;
+    green:              #9ece6a;
+    red:                #f7768e;
+    yellow:             #e0af68;
+
+    /* -- Borders -- */
+    border-window:      rgba ( 122, 162, 247, 0.15 );
+    border-input:       rgba ( 122, 162, 247, 0.15 );
+    border-input-focus: rgba ( 122, 162, 247, 0.40 );
+    border-selected:    #7aa2f7;
+    border-subtle:      rgba ( 41, 46, 66, 0.60 );
+
+    /* -- Transparency helper -- */
+    transparent:        rgba ( 0, 0, 0, 0 );
+
+    /* -- Typography -- */
+    font:               "JetBrainsMono Nerd Font 13";
+
+    /* -- Reset defaults -- */
+    background-color:   @transparent;
+    text-color:         @fg;
+    margin:             0;
+    padding:            0;
+    spacing:            0;
+}
+
+
+/* == Window ===================================================== */
+/* Floating card with deep multi-layered shadow and large radius.  */
+window {
+    location:           center;
+    anchor:             center;
+    width:              650px;
+    background-color:   @bg-window;
+    border:             2px solid;
+    border-color:       @border-window;
+    border-radius:      20px;
+    cursor:             "default";
+    padding:            0;
+    /* Transparency requires a compositor (Hyprland handles this). */
+    transparency:       "real";
+}
+
+
+/* == Main Layout Box ============================================ */
+mainbox {
+    spacing:            0;
+    padding:            20px;
+    children:           [ "inputbar", "message", "listview", "mode-switcher" ];
+    background-color:   @transparent;
+}
+
+
+/* == Input Bar (Search Field) =================================== */
+/* Inset card with its own rounded background — the "search pill".  */
+inputbar {
+    padding:            14px 20px;
+    spacing:            14px;
+    children:           [ "prompt", "entry" ];
+    background-color:   @bg-input;
+    border:             1px solid;
+    border-color:       @border-input;
+    border-radius:      14px;
+    margin:             0 0 12px 0;
+}
+
+prompt {
+    text-color:         @blue;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    font:               "JetBrainsMono Nerd Font 15";
+}
+
+entry {
+    placeholder:            "Search application...";
+    placeholder-color:      @fg-muted;
+    text-color:             @fg;
+    background-color:       @transparent;
+    cursor:                 text;
+    vertical-align:         0.5;
+    font:                   "JetBrainsMono Nerd Font 14";
+}
+
+
+/* == Message / Error Bar ======================================== */
+message {
+    padding:            10px 16px;
+    margin:             0 0 8px 0;
+    background-color:   rgba ( 31, 35, 53, 0.50 );
+    border-radius:      10px;
+}
+
+error-message {
+    padding:            10px 16px;
+    margin:             0 0 8px 0;
+    background-color:   rgba ( 247, 118, 142, 0.08 );
+    border:             1px solid;
+    border-color:       rgba ( 247, 118, 142, 0.25 );
+    border-radius:      10px;
+}
+
+textbox {
+    text-color:         @fg-dim;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+}
+
+
+/* == Results List =============================================== */
+listview {
+    lines:              8;
+    columns:            1;
+    fixed-height:       true;
+    padding:            4px 0;
+    spacing:            4px;
+    scrollbar:          true;
+    background-color:   @transparent;
+    cursor:             "default";
+    cycle:              true;
+    dynamic:            true;
+}
+
+
+/* == Scrollbar ================================================== */
+/* Thin, rounded, accent-colored track for premium feel.           */
+scrollbar {
+    handle-width:       4px;
+    handle-color:       rgba ( 122, 162, 247, 0.35 );
+    border-radius:      4px;
+    padding:            0 0 0 8px;
+    background-color:   @transparent;
+}
+
+
+/* == Result Entry (row) ========================================= */
+element {
+    padding:            12px 16px;
+    spacing:            16px;
+    cursor:             pointer;
+    background-color:   @transparent;
+    border:             0 0 0 3px solid;
+    border-color:       @transparent;
+    border-radius:      12px;
+}
+
+/* -- Normal states -- */
+element normal.normal {
+    background-color:   @transparent;
+    text-color:         @fg-dim;
+}
+
+element alternate.normal {
+    background-color:   @transparent;
+    text-color:         @fg-dim;
+}
+
+/* -- Urgent states (high-priority items) -- */
+element normal.urgent {
+    background-color:   rgba ( 247, 118, 142, 0.06 );
+    text-color:         @red;
+}
+
+element alternate.urgent {
+    background-color:   rgba ( 247, 118, 142, 0.06 );
+    text-color:         @red;
+}
+
+/* -- Active states (running applications) -- */
+element normal.active {
+    background-color:   rgba ( 158, 206, 106, 0.06 );
+    text-color:         @green;
+    border-color:       rgba ( 158, 206, 106, 0.30 );
+}
+
+element alternate.active {
+    background-color:   rgba ( 158, 206, 106, 0.06 );
+    text-color:         @green;
+    border-color:       rgba ( 158, 206, 106, 0.30 );
+}
+
+/* -- Selected states -------------------------------------------- */
+/* The hero interaction: blue glow bar on the left, tinted bg.     */
+element selected.normal {
+    background-color:   @bg-entry-selected;
+    border-color:       @border-selected;
+    text-color:         @fg-bright;
+}
+
+element selected.urgent {
+    background-color:   rgba ( 247, 118, 142, 0.12 );
+    border-color:       @red;
+    text-color:         @red;
+}
+
+element selected.active {
+    background-color:   rgba ( 158, 206, 106, 0.12 );
+    border-color:       @green;
+    text-color:         @green;
+}
+
+
+/* == Entry Icon ================================================= */
+element-icon {
+    size:               36px;
+    cursor:             inherit;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    border-radius:      8px;
+}
+
+element-icon selected {
+    /* Slightly emphasize the icon on selection via text-color.    */
+    text-color:         @fg-bright;
+}
+
+
+/* == Entry Text ================================================= */
+element-text {
+    text-color:         inherit;
+    background-color:   @transparent;
+    vertical-align:     0.5;
+    highlight:          bold underline;
+}
+
+element-text selected {
+    text-color:         @fg-bright;
+    font:               "JetBrainsMono Nerd Font Bold 13";
+}
+
+
+/* == Mode Switcher ============================================== */
+/* Pill-shaped tab bar at the bottom for switching modes.           */
+mode-switcher {
+    spacing:            8px;
+    margin:             12px 0 0 0;
+    background-color:   @transparent;
+}
+
+button {
+    padding:            8px 18px;
+    background-color:   @transparent;
+    text-color:         @fg-muted;
+    border-radius:      10px;
+    cursor:             pointer;
+    font:               "JetBrainsMono Nerd Font 11";
+}
+
+button selected {
+    background-color:   @bg-mode-active;
+    text-color:         @fg;
+    border:             1px solid;
+    border-color:       rgba ( 122, 162, 247, 0.25 );
+}
