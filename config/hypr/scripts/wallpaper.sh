@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Wallpaper Management with swww
+# Wallpaper Management with awww
 # Part of: Tokyo Night Hyprland Rice
 # Author:  CyberSnake
 # Date:    2026-03-26
 #
-# Manages wallpapers using the swww daemon with smooth animated transitions.
+# Manages wallpapers using the awww daemon with smooth animated transitions.
 # Supports initialization (restore last wallpaper), cycling to a random next
 # wallpaper, and setting a specific image. Also maintains a symlink for
 # hyprlock background integration.
 #
 # Usage: wallpaper.sh [init|next|set <path>]
-# Dependencies: swww, hyprctl, coreutils (find, shuf, ln)
+# Dependencies: awww, hyprctl, coreutils (find, shuf, ln)
 # ============================================================================
 
 set -euo pipefail
@@ -37,7 +37,7 @@ apply() {
     local cursor_pos
     cursor_pos=$(hyprctl cursorpos 2>/dev/null || echo "960 540")
 
-    swww img "$wallpaper" \
+    awww img "$wallpaper" \
         --transition-type grow \
         --transition-pos "$cursor_pos" \
         --transition-duration 2 \
@@ -52,9 +52,9 @@ apply() {
 
 # -- Initialize: start daemon and restore last wallpaper --
 init() {
-    # Start swww daemon if not already running
-    if ! pgrep -x swww-daemon > /dev/null; then
-        swww-daemon &
+    # Start awww daemon if not already running
+    if ! pgrep -x awww-daemon > /dev/null; then
+        awww-daemon &
         sleep 1
     fi
 

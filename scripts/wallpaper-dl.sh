@@ -9,9 +9,9 @@
 # Interactive script to download curated 4K wallpapers from wallhaven.cc
 # with multiple theme presets (Tokyo Night, Nature, Space, Anime, Minimal).
 # Supports custom keyword searches and optional immediate application via
-# swww wallpaper manager.
+# awww wallpaper manager.
 #
-# Dependencies: curl, jq, wget, swww (optional, for applying wallpapers)
+# Dependencies: curl, jq, wget, awww (optional, for applying wallpapers)
 # ============================================================================
 
 set -uo pipefail
@@ -216,14 +216,14 @@ if [[ "$APPLY" =~ ^[yY]$ ]]; then
         ! -name "wallpaper.png" | shuf -n1)
 
     if [[ -n "$RANDOM_WALL" ]]; then
-        # Use swww if available, otherwise create a static symlink
+        # Use awww if available, otherwise create a static symlink
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
         WALLPAPER_SCRIPT="${SCRIPT_DIR}/../config/hypr/scripts/wallpaper.sh"
 
         if [[ -x "$WALLPAPER_SCRIPT" ]]; then
             "$WALLPAPER_SCRIPT" set "$RANDOM_WALL"
-        elif command -v swww &>/dev/null; then
-            swww img "$RANDOM_WALL" \
+        elif command -v awww &>/dev/null; then
+            awww img "$RANDOM_WALL" \
                 --transition-type grow \
                 --transition-duration 2 \
                 --transition-fps 60

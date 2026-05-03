@@ -42,6 +42,3 @@ screenshots/
 *.pem
 *.p12
 credentials.json
-
-# ─── Claude Code agent memory (local only) ──────────────────────────
-.claude/

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║   wallpaper-picker.sh — Browse & apply wallpapers via Rofi + swww  ║
+# ║   wallpaper-picker.sh — Browse & apply wallpapers via Rofi + awww  ║
 # ║   Tokyo Night Rice — Hyprland                                      ║
 # ║   Author: CyberSnake                                                     ║
 # ║   Date:   2026-03-26                                               ║
@@ -9,7 +9,7 @@
 # ║   them in a Rofi menu with folder context, and applies the         ║
 # ║   selected wallpaper via the wallpaper.sh set command.             ║
 # ║                                                                     ║
-# ║   Dependencies: rofi-wayland, swww, libnotify, coreutils (find)   ║
+# ║   Dependencies: rofi-wayland, awww, libnotify, coreutils (find)   ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 set -euo pipefail

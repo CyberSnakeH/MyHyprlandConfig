@@ -18,7 +18,7 @@
 #   theme-switch.sh <theme.conf>   Apply a specific theme file
 #   theme-switch.sh                Re-apply the last used theme (from cache)
 #
-# Dependencies: hyprctl, rofi, kitty, swww, swaync-client, notify-send,
+# Dependencies: hyprctl, rofi, kitty, awww, swaync-client, notify-send,
 #               waybar, coreutils (find, shuf, sed)
 # ============================================================================
 

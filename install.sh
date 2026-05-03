@@ -10,7 +10,7 @@
 #    Hyprland  Waybar  Rofi  Kitty  SwayNC  Hyprlock  Hypridle
 #    Starship  Yazi  btop  Firefox userChrome
 #    GTK/Qt Tokyo Night  Bibata Cursor  Papirus Icons
-#    swww  Wlogout  cliphist
+#    awww  Wlogout  cliphist
 #
 #  Usage:  chmod +x install.sh && ./install.sh
 # =====================================================================
@@ -158,6 +158,10 @@ install_packages() {
     log_info "Enabling COPR solopasha/hyprland..."
     sudo dnf copr enable -y solopasha/hyprland 2>/dev/null || log_warn "COPR already enabled or unavailable"
 
+    # awww (animated wallpaper daemon, swww fork) lives in its own COPR
+    log_info "Enabling COPR scottames/awww..."
+    sudo dnf copr enable -y scottames/awww 2>/dev/null || log_warn "COPR already enabled or unavailable"
+
     # System upgrade
     log_info "Updating system..."
     sudo dnf upgrade -y --quiet 2>/dev/null || log_warn "Partial update"
@@ -174,7 +178,7 @@ install_packages() {
         kitty
 
         # Wallpaper engine (animated transitions)
-        swww
+        awww
 
         # Wayland utilities
         wl-clipboard cliphist grim slurp swappy wf-recorder

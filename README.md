@@ -60,7 +60,7 @@ This rice is a **complete desktop environment** -- not just a compositor config.
 - **9 Color Themes** switchable live with `SUPER + T` -- every component reloads instantly (Hyprland, Waybar, Rofi, SwayNC, Kitty, Hyprlock, GTK)
 - **6 Terminal Styles** switchable with `SUPER + SHIFT + T` -- from clean minimalism to cyberpunk aesthetics
 - **13 Neovim Colorschemes** with a Telescope-powered picker (`Space + tt`) organized by category
-- **Wallpaper Picker** (`SUPER + SHIFT + W`) -- browse and apply wallpapers with animated transitions via swww
+- **Wallpaper Picker** (`SUPER + SHIFT + W`) -- browse and apply wallpapers with animated transitions via awww
 - **Wallpaper Downloader** -- script to download curated 4K wallpapers from wallhaven.cc
 - **Opacity Control** (`SUPER + O`) -- 8 presets from fully opaque to ultra-transparent
 - **Keybind Help** (`SUPER + H`) -- full cheat sheet displayed in a Rofi overlay
@@ -84,7 +84,7 @@ This rice is a **complete desktop environment** -- not just a compositor config.
 | **Editor** | [Neovim](https://neovim.io) | lazy.nvim plugin manager, 13 colorschemes, Telescope, Treesitter, completion, terminal toggle |
 | **Lock Screen** | [Hyprlock](https://github.com/hyprwm/hyprlock) | Cinematic lock screen with blur, clock, avatar, and themed greeting |
 | **Idle Daemon** | [Hypridle](https://github.com/hyprwm/hypridle) | Dim at 5 min, lock at 10 min, DPMS off at 15 min, suspend at 30 min |
-| **Wallpaper** | [swww](https://github.com/LGFae/swww) | Animated transitions (grow, fade, wipe) with picker and downloader scripts |
+| **Wallpaper** | [awww](https://github.com/LGFae/swww) | Animated transitions (grow, fade, wipe) with picker and downloader scripts |
 | **Shell Prompt** | [Starship](https://starship.rs) | Two-line powerline with git status, language detection, and directory fill |
 | **File Manager** | [Yazi](https://yazi-rs.github.io) + [Thunar](https://docs.xfce.org/xfce/thunar/start) | TUI and GUI file management, both themed |
 | **System Monitor** | [btop](https://github.com/aristocratos/btop) | Custom Tokyo Night theme with full sensor support |
@@ -352,7 +352,7 @@ MyHyprlandConfig/
 |   |   '-- scripts/                    #   10 utility scripts
 |   |       |-- theme-switch.sh         #     Live theme switcher (9 themes)
 |   |       |-- terminal-style.sh       #     Terminal style switcher (6 styles)
-|   |       |-- wallpaper.sh            #     Wallpaper cycling with swww
+|   |       |-- wallpaper.sh            #     Wallpaper cycling with awww
 |   |       |-- wallpaper-picker.sh     #     Browse & pick wallpapers via Rofi
 |   |       |-- opacity.sh             #     Window opacity control (8 presets)
 |   |       |-- keybinds.sh             #     Keybind cheat sheet in Rofi
@@ -537,7 +537,7 @@ sudo dnf install -y \
 
 | Package | Source | Purpose |
 |---------|--------|---------|
-| swww | [Cargo / COPR](https://github.com/LGFae/swww) | Animated wallpaper daemon |
+| awww | [Cargo / COPR](https://github.com/LGFae/swww) | Animated wallpaper daemon |
 | Starship | [starship.rs](https://starship.rs) | Cross-shell prompt |
 | Yazi | [GitHub](https://yazi-rs.github.io) | TUI file manager |
 | JetBrainsMono Nerd Font | [Nerd Fonts](https://www.nerdfonts.com) | Terminal and UI font |
@@ -553,12 +553,12 @@ sudo dnf install -y \
 | Hyprland does not start | Check `journalctl --user -u hyprland` and ensure the COPR repo is enabled |
 | Waybar not showing | Run `waybar` from a terminal to see errors; check `config.jsonc` syntax with `jq` |
 | Rofi not launching | Ensure `rofi-wayland` is installed (not the X11 version) |
-| No wallpaper | Verify `swww-daemon` is running (`swww query`); check wallpaper path exists |
+| No wallpaper | Verify `awww-daemon` is running (`awww query`); check wallpaper path exists |
 | Screen will not lock | Ensure `hyprlock` is installed and `hypridle` is running |
 | No sound controls | Install `pamixer` and `playerctl` |
 | Fonts look wrong | Run `fc-cache -fv` after installing fonts; log out and back in |
 | Portal issues | Run `~/.config/hypr/scripts/portal.sh` or restart `xdg-desktop-portal-hyprland` |
-| Theme switch incomplete | Check that `swww-daemon` is running; verify theme file exists in `themes/` |
+| Theme switch incomplete | Check that `awww-daemon` is running; verify theme file exists in `themes/` |
 | Neovim plugins missing | Open Neovim and run `:Lazy sync` to install all plugins |
 | Waybar weather empty | Edit `config/waybar/scripts/weather.sh` and set your city; check internet connection |
 
