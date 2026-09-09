@@ -51,8 +51,8 @@
     // Hyprland workspaces — persistent 1-9 with semantic Nerd Font icons
     "hyprland/workspaces": {
         "format": "{icon}",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'",
         "on-click": "activate",
         "all-outputs": true,
         "sort-by-number": true,
@@ -253,6 +253,6 @@
         "format": "⏻",
         "tooltip-format": "Power Menu",
         "on-click": "wlogout -b 4 -c 0 -r 0 -m 0",
-        "on-click-right": "hyprctl dispatch exit"
+        "on-click-right": "~/.config/hypr/scripts/session-action.sh logout"
     }
 }

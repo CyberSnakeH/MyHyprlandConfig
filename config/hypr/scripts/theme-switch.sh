@@ -6,7 +6,7 @@
 # Date:    2026-03-26
 #
 # Applies a complete theme across all rice components in one shot:
-#   - Hyprland (live via hyprctl keyword — instant, no restart)
+#   - Hyprland (live via hyprctl eval — instant, no restart)
 #   - Waybar (regenerate style.css with new color variables)
 #   - Rofi (regenerate theme .rasi with color variables + base selectors)
 #   - Kitty (live reload via remote control)
@@ -105,17 +105,17 @@ echo "$THEME_FILE" > "$CACHE_FILE"
 
 echo "[theme-switch] Applying theme: ${THEME_NAME}"
 
-# ── 1. Hyprland — live changes via hyprctl keyword ─────────────────────
-hyprctl keyword general:col.active_border "$ACTIVE_BORDER" 2>/dev/null || true
-hyprctl keyword general:col.inactive_border "$INACTIVE_BORDER" 2>/dev/null || true
-hyprctl keyword general:gaps_in "$GAPS_IN" 2>/dev/null || true
-hyprctl keyword general:gaps_out "$GAPS_OUT" 2>/dev/null || true
-hyprctl keyword general:border_size "$BORDER_SIZE" 2>/dev/null || true
-hyprctl keyword decoration:rounding "$ROUNDING" 2>/dev/null || true
-hyprctl keyword decoration:active_opacity "$ACTIVE_OPACITY" 2>/dev/null || true
-hyprctl keyword decoration:inactive_opacity "$INACTIVE_OPACITY" 2>/dev/null || true
-hyprctl keyword decoration:blur:size "$BLUR_SIZE" 2>/dev/null || true
-hyprctl keyword decoration:blur:passes "$BLUR_PASSES" 2>/dev/null || true
+# ── 1. Hyprland — live changes via hyprctl eval ─────────────────────
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" general:col.active_border "$ACTIVE_BORDER" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" general:col.inactive_border "$INACTIVE_BORDER" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" general:gaps_in "$GAPS_IN" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" general:gaps_out "$GAPS_OUT" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" general:border_size "$BORDER_SIZE" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:rounding "$ROUNDING" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:active_opacity "$ACTIVE_OPACITY" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:inactive_opacity "$INACTIVE_OPACITY" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:blur:size "$BLUR_SIZE" 2>/dev/null || true
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:blur:passes "$BLUR_PASSES" 2>/dev/null || true
 
 echo "[theme-switch] Hyprland updated"
 

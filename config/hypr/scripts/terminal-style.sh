@@ -63,9 +63,9 @@ done
 
 # Adjust Hyprland opacity based on style
 case "${key,,}" in
-    transparent) hyprctl keyword "windowrule" "opacity 0.75 0.70, match:class ^(kitty)$" 2>/dev/null ;;
-    opaque)      hyprctl keyword "windowrule" "opacity 1.0 1.0, match:class ^(kitty)$" 2>/dev/null ;;
-    *)           hyprctl keyword "windowrule" "opacity 0.90 0.85, match:class ^(kitty)$" 2>/dev/null ;;
+    transparent) hyprctl eval 'hl.window_rule({ name = "terminal-style-opacity", match = { class = "^(kitty)$" }, opacity = "0.75 0.70" })'  2>/dev/null ;;
+    opaque)      hyprctl eval 'hl.window_rule({ name = "terminal-style-opacity", match = { class = "^(kitty)$" }, opacity = "1.0 1.0" })'  2>/dev/null ;;
+    *)           hyprctl eval 'hl.window_rule({ name = "terminal-style-opacity", match = { class = "^(kitty)$" }, opacity = "0.90 0.85" })'  2>/dev/null ;;
 esac
 
 notify-send -t 2000 "  Terminal" "Style: $key"

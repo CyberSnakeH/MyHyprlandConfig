@@ -42,3 +42,6 @@ screenshots/
 *.pem
 *.p12
 credentials.json
+
+# Local assistant settings
+.claude/

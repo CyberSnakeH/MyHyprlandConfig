@@ -339,16 +339,16 @@ MyHyprlandConfig/
 |
 |-- config/
 |   |-- hypr/                           # Hyprland compositor
-|   |   |-- hyprland.conf               #   Main entry point (sources conf.d/)
+|   |   |-- hyprland.lua               #   Main entry point (sources conf.d/)
 |   |   |-- conf.d/                     #   8 modular config files
-|   |   |   |-- monitors.conf           #     Monitor layout & EDID detection
-|   |   |   |-- input.conf              #     Keyboard (AZERTY), touchpad, mouse
-|   |   |   |-- keybinds.conf           #     All keyboard shortcuts
-|   |   |   |-- decorations.conf        #     Borders, rounding, blur, shadows
-|   |   |   |-- animations.conf         #     Bezier curves & transitions
-|   |   |   |-- rules.conf              #     Window & layer rules
-|   |   |   |-- autostart.conf          #     Startup applications
-|   |   |   '-- environment.conf        #     Environment variables
+|   |   |   |-- monitors.lua           #     Monitor layout & EDID detection
+|   |   |   |-- input.lua              #     Keyboard (AZERTY), touchpad, mouse
+|   |   |   |-- keybinds.lua           #     All keyboard shortcuts
+|   |   |   |-- decorations.lua        #     Borders, rounding, blur, shadows
+|   |   |   |-- animations.lua         #     Bezier curves & transitions
+|   |   |   |-- rules.lua              #     Window & layer rules
+|   |   |   |-- autostart.lua          #     Startup applications
+|   |   |   '-- environment.lua        #     Environment variables
 |   |   '-- scripts/                    #   10 utility scripts
 |   |       |-- theme-switch.sh         #     Live theme switcher (9 themes)
 |   |       |-- terminal-style.sh       #     Terminal style switcher (6 styles)
@@ -454,26 +454,34 @@ The theme switcher script (`SUPER + T`) automatically discovers all `.conf` file
 
 Create a new `.conf` file in `config/kitty/styles/`. Each style defines font family, size, opacity, cursor shape, padding, and color overrides. The terminal style switcher (`SUPER + SHIFT + T`) automatically discovers all styles in this directory.
 
+### Hyprland Lua configuration
+
+Hyprland 0.56.2 or newer is required. The entry point is `hyprland.lua`;
+`conf.d/*.lua` contains the settings, rules, shortcuts and startup hooks.
+After migrating an existing `.conf` session, log out and back in to use Lua.
+Validate edits with `Hyprland --verify-config -c "$HOME/.config/hypr/hyprland.lua"`.
+Hyprlock, Hypridle, Kitty and shell theme palettes keep their own formats.
+
 ### Changing Keyboard Layout
 
-Edit `config/hypr/conf.d/input.conf`:
+Edit `config/hypr/conf.d/input.lua`:
 
 ```
-input {
-    kb_layout = us          # Change from "fr" to your layout
-    kb_variant =            # Remove "azerty" if not needed
-}
+hl.config({ input = {
+    kb_layout = "us",       -- Change from "fr" to your layout
+    kb_variant = "",        -- Remove "azerty" if not needed
+} })
 ```
 
-If switching away from AZERTY, also update the workspace keybinds in `config/hypr/conf.d/keybinds.conf` to use your layout's number row keys.
+If switching away from AZERTY, also update the workspace keybinds in `config/hypr/conf.d/keybinds.lua` to use your layout's number row keys.
 
 ### Changing Monitor Configuration
 
-Edit `config/hypr/conf.d/monitors.conf`. The config supports EDID-based detection for multi-monitor setups:
+Edit `config/hypr/conf.d/monitors.lua`. The config supports EDID-based detection for multi-monitor setups:
 
 ```
-monitor = desc:LG Display 0x0000, preferred, 0x0, 1
-monitor = desc:Dell Inc DELL U2720Q, preferred, 1920x0, 1.25
+hl.monitor({ output = "desc:LG Display 0x0000", mode = "preferred", position = "0x0", scale = 1 })
+hl.monitor({ output = "desc:Dell Inc DELL U2720Q", mode = "preferred", position = "1920x0", scale = 1.25 })
 ```
 
 Run `hyprctl monitors` to see your available displays and their EDID descriptions.
@@ -501,7 +509,7 @@ This downloads high-resolution wallpapers from wallhaven.cc into `~/Pictures/Wal
 
 ### Switching Animations
 
-Edit `config/hypr/conf.d/animations.conf` to adjust bezier curves, animation speeds, and styles. Each animation type (windows, workspaces, fade, border) can be tuned independently.
+Edit `config/hypr/conf.d/animations.lua` to adjust bezier curves, animation speeds, and styles. Each animation type (windows, workspaces, fade, border) can be tuned independently.
 
 ---
 
@@ -517,7 +525,7 @@ sudo dnf copr enable -y solopasha/hyprland
 
 # Core packages
 sudo dnf install -y \
-    hyprland hyprlock hypridle hyprpicker xdg-desktop-portal-hyprland \
+    hyprland hyprland-guiutils hyprlock hypridle hyprpicker xdg-desktop-portal-hyprland \
     waybar rofi-wayland swaync libnotify \
     kitty neovim wlogout \
     wl-clipboard cliphist grim slurp swappy wf-recorder \

@@ -39,6 +39,8 @@ selected=$(echo "$options" | rofi -dmenu \
 # -- Extract the numeric opacity value (first field) --
 opacity=$(echo "$selected" | awk '{print $1}')
 
+[[ "$opacity" =~ ^(0([.][0-9]+)?|1([.]0+)?)$ ]] || exit 1
+
 # -- Calculate inactive opacity (clamped to minimum 0.10) --
 inactive=$(echo "$opacity - $INACTIVE_OFFSET" | bc)
 
@@ -48,8 +50,8 @@ if (( $(echo "$inactive <= 0" | bc -l) )); then
 fi
 
 # -- Apply to Hyprland decoration settings --
-hyprctl keyword decoration:active_opacity "$opacity" 2>/dev/null
-hyprctl keyword decoration:inactive_opacity "$inactive" 2>/dev/null
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:active_opacity "$opacity" 2>/dev/null
+"$(dirname -- "${BASH_SOURCE[0]}")/hypr-option.sh" decoration:inactive_opacity "$inactive" 2>/dev/null
 
 # -- Notify the user --
 notify-send -t 2000 "  Opacity" "Active: ${opacity} | Inactive: ${inactive}"

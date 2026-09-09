@@ -168,7 +168,7 @@ install_packages() {
 
     local -a pkgs=(
         # Hyprland ecosystem
-        hyprland hyprlock hypridle hyprpicker
+        hyprland hyprland-guiutils hyprlock hypridle hyprpicker
         xdg-desktop-portal-hyprland
 
         # Bar, launcher, notifications
@@ -240,6 +240,16 @@ install_packages() {
             log_ok "All packages installed"
         fi
     fi
+
+    # These are required for a usable session; --skip-unavailable must not hide them.
+    local required
+    for required in Hyprland hyprctl hyprlock hypridle; do
+        if ! command -v "$required" >/dev/null 2>&1; then
+            log_error "Required command missing: $required. Install it before continuing."
+            return 1
+        fi
+    done
+
 }
 
 # =====================================================================
@@ -413,12 +423,12 @@ deploy_configs() {
              "${HOME}/Pictures/Wallpapers"
 
     # ── Hyprland core ────────────────────────────────────────────────
-    cp "${CONFIG_SRC}/hypr/hyprland.conf" "${HOME}/.config/hypr/"
-    log_ok "hyprland.conf"
+    cp "${CONFIG_SRC}/hypr/hyprland.lua" "${HOME}/.config/hypr/"
+    log_ok "hyprland.lua"
 
     # Modular configs (conf.d/)
     local conf_count=0
-    for conf_file in "${CONFIG_SRC}/hypr/conf.d/"*.conf; do
+    for conf_file in "${CONFIG_SRC}/hypr/conf.d/"*.lua; do
         [[ ! -f "${conf_file}" ]] && continue
         cp "${conf_file}" "${HOME}/.config/hypr/conf.d/"
         (( conf_count++ )) || true
@@ -677,7 +687,7 @@ _scale_for_connector() {
 detect_monitors() {
     log_step "Auto-detecting monitors"
 
-    local mon_conf="${HOME}/.config/hypr/conf.d/monitors.conf"
+    local mon_conf="${HOME}/.config/hypr/conf.d/monitors.lua"
     local drm_base="/sys/class/drm"
 
     # ── 1. List connected connectors ─────────────────────────────────
@@ -696,12 +706,12 @@ detect_monitors() {
     if [[ ${#connected_connectors[@]} -eq 0 ]]; then
         log_warn "No DRM connector found -- fallback auto-detection Hyprland"
         cat > "${mon_conf}" << 'EOF'
-# ======================================================================
-# monitors.conf -- fallback (auto-detection Hyprland)
-# /sys/class/drm inaccessible or no connectors found
-# ======================================================================
+-- ======================================================================
+-- monitors.lua -- fallback (auto-detection Hyprland)
+-- /sys/class/drm inaccessible or no connectors found
+-- ======================================================================
 
-monitor = , preferred, auto, 1
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 EOF
         return
     fi
@@ -801,12 +811,12 @@ EOF
         offset_x=$(( offset_x + eff_w ))
     done
 
-    # ── 4. Write monitors.conf ───────────────────────────────────────
+    # ── 4. Write monitors.lua ───────────────────────────────────────
     {
-        echo "# ======================================================================"
-        echo "# monitors.conf -- auto-generated $(date '+%Y-%m-%d %H:%M')"
-        echo "# $(uname -r) | ${#connected_connectors[@]} monitor(s) detected"
-        echo "# ======================================================================"
+        echo "-- ======================================================================"
+        echo "-- monitors.lua -- auto-generated $(date '+%Y-%m-%d %H:%M')"
+        echo "-- $(uname -r) | ${#connected_connectors[@]} monitor(s) detected"
+        echo "-- ======================================================================"
         echo ""
 
         local idx=0
@@ -816,47 +826,47 @@ EOF
             local y="${mon_y[${c}]}"
             local scale="${mon_scale[${c}]}"
 
-            echo "# -- Monitor $((idx+1)) : ${c} --"
-            echo "monitor = ${c}, ${mode}, ${x}x${y}, ${scale}"
+            echo "-- -- Monitor $((idx+1)) : ${c} --"
+            printf 'hl.monitor({ output = "%s", mode = "%s", position = "%sx%s", scale = %s })\n' "${c}" "${mode}" "${x}" "${y}" "${scale}"
             echo ""
             (( idx++ )) || true
         done
 
         # Workspace mapping
-        echo "# -- Workspace mapping --"
+        echo "-- -- Workspace mapping --"
         if [[ ${#sorted_connectors[@]} -ge 2 ]]; then
             local primary="${sorted_connectors[0]}"
             local secondary="${sorted_connectors[1]}"
-            echo "# Primary (${primary}) : workspaces 1-7"
+            echo "-- Primary (${primary}) : workspaces 1-7"
             for i in 1 2 3 4 5 6 7; do
                 if [[ ${i} -eq 1 ]]; then
-                    echo "workspace = ${i}, monitor:${primary}, default:true"
+                    printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s", default = true })\n' "${i}" "${primary}"
                 else
-                    echo "workspace = ${i}, monitor:${primary}"
+                    printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s" })\n' "${i}" "${primary}"
                 fi
             done
             echo ""
-            echo "# Secondary (${secondary}) : workspaces 8-9"
-            echo "workspace = 8, monitor:${secondary}, default:true"
-            echo "workspace = 9, monitor:${secondary}"
+            echo "-- Secondary (${secondary}) : workspaces 8-9"
+            printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s", default = true })\n' "8" "${secondary}"
+            printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s" })\n' "9" "${secondary}"
         else
             local primary="${sorted_connectors[0]}"
             for i in 1 2 3 4 5 6 7 8 9; do
                 if [[ ${i} -eq 1 ]]; then
-                    echo "workspace = ${i}, monitor:${primary}, default:true"
+                    printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s", default = true })\n' "${i}" "${primary}"
                 else
-                    echo "workspace = ${i}, monitor:${primary}"
+                    printf 'hl.workspace_rule({ workspace = "%s", monitor = "%s" })\n' "${i}" "${primary}"
                 fi
             done
         fi
 
         echo ""
-        echo "# Fallback for any unlisted connector"
-        echo "monitor = , preferred, auto, 1"
+        echo "-- Fallback for any unlisted connector"
+        echo 'hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })'
 
     } > "${mon_conf}"
 
-    log_ok "monitors.conf written -> ${mon_conf}"
+    log_ok "monitors.lua written -> ${mon_conf}"
 
     # ── 5. Summary ───────────────────────────────────────────────────
     echo ""
@@ -866,7 +876,7 @@ EOF
             "${c}" "${mon_mode[${c}]}" "${mon_scale[${c}]}" "${mon_x[${c}]}" "${mon_y[${c}]}"
     done
     echo ""
-    log_info "You can edit ~/.config/hypr/conf.d/monitors.conf to fine-tune the layout"
+    log_info "You can edit ~/.config/hypr/conf.d/monitors.lua to fine-tune the layout"
 }
 
 # =====================================================================
@@ -1069,7 +1079,7 @@ print_summary() {
     echo -e "     ${DIM}wallhaven.cc | color filter #1a1b26${RESET}"
     echo ""
     echo -e "  ${CYAN}2.${RESET} Monitors"
-    echo -e "     Check ${YELLOW}~/.config/hypr/conf.d/monitors.conf${RESET} (auto-generated)"
+    echo -e "     Check ${YELLOW}~/.config/hypr/conf.d/monitors.lua${RESET} (auto-generated)"
     echo -e "     ${DIM}hyprctl monitors -- to see exact names${RESET}"
     echo ""
     echo -e "  ${CYAN}3.${RESET} Weather (Waybar)"
